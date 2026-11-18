@@ -116,7 +116,7 @@ sadness:[
 ]
 };
 
-let current=null,index=0,startY=0,lastTap=0,shown=[],itemStartedAt=0,lastCategory=null;const videoDecks={},lastVideoBySpace={};
+let current=null,index=0,startY=0,lastTap=0,shown=[],itemStartedAt=0,lastCategory=null;const videoDecks={},lastVideoBySpace={};let videoLoadTimer=null,videoLoadToken=0,failedVideoAttempts={};
 const home=document.querySelector("#home"),feed=document.querySelector("#feed"),scene=document.querySelector("#scene"),video=document.querySelector("#scene-video"),msg=document.querySelector("#message"),sub=document.querySelector("#submessage"),soundButton=document.querySelector("#sound-toggle"),sourceCredit=document.querySelector("#source-credit"),depthToggle=document.querySelector("#depth-toggle"),depthPanel=document.querySelector("#depth-panel"),depthCopy=document.querySelector("#depth-copy"),depthYes=document.querySelector("#depth-yes"),depthClose=document.querySelector("#depth-close");
 const ADAPT_KEY="tishe_content_rhythm_v1";
 function readAdaptation(){try{return JSON.parse(localStorage.getItem(ADAPT_KEY)||"{}")}catch(e){return {}}}
@@ -126,7 +126,20 @@ function learnFromVisit(){if(!current||!itemStartedAt)return;const item=current.
 function chooseNext(){const remaining=current.items.map((item,i)=>({item,i})).filter(x=>!shown.includes(x.i));if(!remaining.length){shown=[];return chooseNext()}const scores=categoryScores(current.key);remaining.sort((a,b)=>{const score=x=>(scores[x.item[2]]||0)+(x.item[2]===lastCategory?-0.55:0)-(x.i/1000);return score(b)-score(a)});return remaining[0].i}
 function render(){const item=current.items[index];depthPanel.classList.remove("visible");depthToggle.hidden=false;depthYes.hidden=false;msg.classList.add("is-changing");sub.classList.add("is-changing");window.setTimeout(()=>{if(!current)return;msg.textContent=item[0];sub.textContent=item[1];requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},170);itemStartedAt=Date.now();lastCategory=item[2];depthCopy.textContent=deeper[current.key][index];if(!shown.includes(index))shown.push(index)}
 function next(){if(!current)return;learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
+function skipUnavailableVideo(key,token){
+  if(token!==videoLoadToken||!current||current.key!==key)return;
+  if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}
+  failedVideoAttempts[key]=(failedVideoAttempts[key]||0)+1;
+  if(failedVideoAttempts[key]<data[key].videos.length){
+    drawVideo(key);
+  }else{
+    video.classList.remove("is-loading");
+    sourceCredit.hidden=true;
+  }
+}
 function drawVideo(key){
+  if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}
+  const token=++videoLoadToken;
   const list=data[key].videos;
   let deck=videoDecks[key];
   if(!deck||deck.length===0){
@@ -144,18 +157,20 @@ function drawVideo(key){
   lastVideoBySpace[key]=chosen;
   const url=list[chosen];
   const file=decodeURIComponent(url.substring(url.lastIndexOf("/")+1));
-  sourceCredit.href="https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file);
-  sourceCredit.title="Открыть источник видео";
+  sourceCredit.href="https://commons.wikimedia.org/wiki/File:"+encodeURIComponent(file).replace(/%20/g,"_");
+  sourceCredit.title="Открыть страницу видео и сведения об авторе";
+  sourceCredit.hidden=false;
   video.classList.add("is-loading");
   video.pause();
   video.src=url;
   video.load();
   const playResult=video.play();
   if(playResult&&typeof playResult.catch==="function")playResult.catch(()=>{});
+  videoLoadTimer=setTimeout(()=>skipUnavailableVideo(key,token),18000);
 }
-function openSpace(key){current={...data[key],key};depthPanel.classList.remove("visible");depthToggle.hidden=false;index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);drawVideo(key);home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render();}
+function openSpace(key){current={...data[key],key};failedVideoAttempts[key]=0;depthPanel.classList.remove("visible");depthToggle.hidden=false;index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);drawVideo(key);home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render();}
 function goHome(){learnFromVisit();depthPanel.classList.remove("visible");depthToggle.hidden=false;stopAtmosphere();feed.classList.remove("active","immersive");home.classList.add("active");video.pause();current=null;msg.classList.remove("is-changing");sub.classList.remove("is-changing")}
-video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>video.classList.add("is-loading"));
+video.addEventListener("loadeddata",()=>{if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}if(current)failedVideoAttempts[current.key]=0;video.classList.remove("is-loading");sourceCredit.hidden=false;});video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>{if(current)skipUnavailableVideo(current.key,videoLoadToken);});
 let audioContext=null,ambientGain=null,ambientEnabled=false,spaceSoundNodes=[];
 function setSoundButton(){soundButton.setAttribute("aria-pressed",String(ambientEnabled));soundButton.setAttribute("aria-label",ambientEnabled?"Выключить звук атмосферы":"Включить звук атмосферы");soundButton.title=ambientEnabled?"Звук включён":"Звук выключен";soundButton.textContent=ambientEnabled?"◖))":"◖)";}
 function getAudioContext(){const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return null;audioContext=audioContext||new AudioCtx();return audioContext}
