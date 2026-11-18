@@ -126,7 +126,34 @@ function learnFromVisit(){if(!current||!itemStartedAt)return;const item=current.
 function chooseNext(){const remaining=current.items.map((item,i)=>({item,i})).filter(x=>!shown.includes(x.i));if(!remaining.length){shown=[];return chooseNext()}const scores=categoryScores(current.key);remaining.sort((a,b)=>{const score=x=>(scores[x.item[2]]||0)+(x.item[2]===lastCategory?-0.55:0)-(x.i/1000);return score(b)-score(a)});return remaining[0].i}
 function render(){const item=current.items[index];depthPanel.classList.remove("visible");depthToggle.hidden=false;depthYes.hidden=false;msg.classList.add("is-changing");sub.classList.add("is-changing");window.setTimeout(()=>{if(!current)return;msg.textContent=item[0];sub.textContent=item[1];requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},170);itemStartedAt=Date.now();lastCategory=item[2];depthCopy.textContent=deeper[current.key][index];if(!shown.includes(index))shown.push(index)}
 function next(){if(!current)return;learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
-function drawVideo(key){let deck=videoDecks[key]||[];if(!deck.length){deck=data[key].videos.map((url,i)=>i);for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}if(deck.length>1&&deck[0]===lastVideoBySpace[key]){[deck[0],deck[1]]=[deck[1],deck[0]];}}const chosen=deck.shift();videoDecks[key]=deck;lastVideoBySpace[key]=chosen;const url=data[key].videos[chosen];const file=decodeURIComponent(url.split("/").pop());sourceCredit.href="https://commons.wikimedia.org/wiki/File:"+encodeURIComponent(file).replace(/%2C/g,",");sourceCredit.title="Открыть страницу файла с автором и условиями лицензии";video.classList.add("is-loading");video.pause();video.src=url;video.load();video.play().catch(()=>{});}\nfunction openSpace(key){current={...data[key],key};depthPanel.classList.remove("visible");depthToggle.hidden=false;index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);drawVideo(key);home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render();}
+function drawVideo(key){
+  const list=data[key].videos;
+  let deck=videoDecks[key];
+  if(!deck||deck.length===0){
+    deck=list.map((url,i)=>i);
+    for(let i=deck.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      const temp=deck[i];deck[i]=deck[j];deck[j]=temp;
+    }
+    if(deck.length>1&&deck[0]===lastVideoBySpace[key]){
+      const temp=deck[0];deck[0]=deck[1];deck[1]=temp;
+    }
+  }
+  const chosen=deck.shift();
+  videoDecks[key]=deck;
+  lastVideoBySpace[key]=chosen;
+  const url=list[chosen];
+  const file=decodeURIComponent(url.substring(url.lastIndexOf("/")+1));
+  sourceCredit.href="https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file);
+  sourceCredit.title="Открыть источник видео";
+  video.classList.add("is-loading");
+  video.pause();
+  video.src=url;
+  video.load();
+  const playResult=video.play();
+  if(playResult&&typeof playResult.catch==="function")playResult.catch(()=>{});
+}
+function openSpace(key){current={...data[key],key};depthPanel.classList.remove("visible");depthToggle.hidden=false;index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);drawVideo(key);home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render();}
 function goHome(){learnFromVisit();depthPanel.classList.remove("visible");depthToggle.hidden=false;stopAtmosphere();feed.classList.remove("active","immersive");home.classList.add("active");video.pause();current=null;msg.classList.remove("is-changing");sub.classList.remove("is-changing")}
 video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>video.classList.add("is-loading"));
 let audioContext=null,ambientGain=null,ambientEnabled=false,spaceSoundNodes=[];
