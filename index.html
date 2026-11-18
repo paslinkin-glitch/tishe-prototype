@@ -191,6 +191,7 @@ function goHome(){learnFromVisit();depthPanel.classList.remove("visible");feed.c
 video.addEventListener("loadeddata",()=>{if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}if(current)failedVideoAttempts[current.key]=0;video.classList.remove("is-loading");});video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>{const token=videoLoadToken;if(current&&video.currentSrc===video.src)skipUnavailableVideo(current.key,token);});
 function enableVideoAudio(){video.muted=false;video.volume=1;if(video.paused){const p=video.play();if(p&&typeof p.catch==="function")p.catch(()=>{});}}
 
+feed.addEventListener("pointerdown",()=>{video.muted=false;video.volume=1;const p=video.play();if(p&&typeof p.catch==="function")p.catch(()=>{});},{passive:true});
 depthClose.addEventListener("click",()=>{depthPanel.classList.remove("visible");});
 depthYes.addEventListener("click",()=>{if(current){const all=readAdaptation(),scores=all[current.key]||{presence:0,support:0,reflection:0},kind=current.items[index][2];scores[kind]=Math.min(2.5,(scores[kind]||0)+.25);all[current.key]=scores;writeAdaptation(all);}depthCopy.textContent="Спасибо, что прислушался к себе. Можно ничего не менять и не делать.";depthYes.hidden=true;});
 
