@@ -59,13 +59,19 @@ sadness:{name:"ГРУСТЬ",video:"https://commons.wikimedia.org/wiki/Special:F
 ["Вспомни, что обычно приносит тебе хотя бы немного облегчения.","Не обязательно радость. Может быть, музыка, прогулка, знакомый голос или тишина.","support"],
 ["Если бы близкий человек переживал то же самое, что бы ты хотел ему сказать?","Есть ли в этих словах что-то, что можно бережно адресовать и себе?","reflection"]
 ]}};
-let current=null,index=0,startY=0,lastTap=0;
+let current=null,index=0,startY=0,lastTap=0,shown=[],itemStartedAt=0,lastCategory=null;
 const home=document.querySelector("#home"),feed=document.querySelector("#feed"),scene=document.querySelector("#scene"),video=document.querySelector("#scene-video"),msg=document.querySelector("#message"),sub=document.querySelector("#submessage");
+const ADAPT_KEY="tishe_content_rhythm_v1";
+function readAdaptation(){try{return JSON.parse(localStorage.getItem(ADAPT_KEY)||"{}")}catch(e){return {}}}
+function writeAdaptation(value){try{localStorage.setItem(ADAPT_KEY,JSON.stringify(value))}catch(e){}}
+function categoryScores(key){const all=readAdaptation();return all[key]||{presence:0,support:0,reflection:0}}
+function learnFromVisit(){if(!current||!itemStartedAt)return;const item=current.items[index],elapsed=(Date.now()-itemStartedAt)/1000,category=item[2];if(!category)return;const all=readAdaptation(),scores=all[current.key]||{presence:0,support:0,reflection:0};let delta=elapsed>=14?0.45:elapsed>=7?0.15:elapsed<3?-0.08:0;scores[category]=Math.max(-1.5,Math.min(2.5,(scores[category]||0)+delta));all[current.key]=scores;writeAdaptation(all);itemStartedAt=0}
+function chooseNext(){const remaining=current.items.map((item,i)=>({item,i})).filter(x=>!shown.includes(x.i));if(!remaining.length){shown=[];return chooseNext()}const scores=categoryScores(current.key);remaining.sort((a,b)=>{const score=x=>(scores[x.item[2]]||0)+(x.item[2]===lastCategory?-0.55:0)+(x.i/1000);return score(b)-score(a)});return remaining[0].i}
+function render(){const item=current.items[index];msg.textContent=item[0];sub.textContent=item[1];itemStartedAt=Date.now();lastCategory=item[2];if(!shown.includes(index))shown.push(index)}
+function next(){if(!current)return;learnFromVisit();index=chooseNext();render()}
+function openSpace(key){current={...data[key],key};index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);video.classList.add("is-loading");video.pause();video.src=current.video;video.load();video.play().catch(()=>{});home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render()}
+function goHome(){learnFromVisit();feed.classList.remove("active","immersive");home.classList.add("active");video.pause();current=null}
 video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>video.classList.add("is-loading"));
-function render(){let item=current.items[index];msg.textContent=item[0];sub.textContent=item[1]}
-function next(){if(!current)return;index=(index+1)%current.items.length;render()}
-function openSpace(key){current=data[key];index=0;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);video.classList.add("is-loading");video.pause();video.src=current.video;video.load();video.play().catch(()=>{});home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render()}
-function goHome(){feed.classList.remove("active","immersive");home.classList.add("active");video.pause();current=null}
 document.querySelectorAll("[data-space]").forEach(b=>b.addEventListener("click",()=>openSpace(b.dataset.space)));
 document.querySelector("#back").addEventListener("click",goHome);
 feed.addEventListener("touchstart",e=>startY=e.changedTouches[0].clientY,{passive:true});
