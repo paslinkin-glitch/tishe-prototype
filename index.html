@@ -137,7 +137,25 @@ function skipUnavailableVideo(key,token){
     sourceCredit.hidden=true;
   }
 }
-function drawVideo(key){
+async function resolvePlayableVideo(url){
+  const file=decodeURIComponent(url.substring(url.lastIndexOf("/")+1));
+  const api=new URL("https://commons.wikimedia.org/w/api.php");
+  api.search=new URLSearchParams({action:"query",titles:"File:"+file,prop:"videoinfo",viprop:"derivatives",format:"json",origin:"*"}).toString();
+  try{
+    const response=await fetch(api.toString(),{mode:"cors"});
+    if(!response.ok)throw new Error("Commons API unavailable");
+    const json=await response.json();
+    const page=Object.values(json.query.pages)[0];
+    const derivatives=page&&page.videoinfo&&page.videoinfo[0]&&page.videoinfo[0].derivatives||[];
+    const preferred=["480p.vp9.webm","360p.vp9.webm","240p.vp9.webm","480p.webm","360p.webm","240p.webm"];
+    for(const key of preferred){
+      const source=derivatives.find(item=>item.transcodekey===key&&item.src);
+      if(source)return source.src;
+    }
+  }catch(e){}
+  return url;
+}
+async function drawVideo(key){
   if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}
   const token=++videoLoadToken;
   const list=data[key].videos;
@@ -155,22 +173,26 @@ function drawVideo(key){
   const chosen=deck.shift();
   videoDecks[key]=deck;
   lastVideoBySpace[key]=chosen;
-  const url=list[chosen];
-  const file=decodeURIComponent(url.substring(url.lastIndexOf("/")+1));
+  const originalUrl=list[chosen];
+  const file=decodeURIComponent(originalUrl.substring(originalUrl.lastIndexOf("/")+1));
   sourceCredit.href="https://commons.wikimedia.org/wiki/File:"+encodeURIComponent(file).replace(/%20/g,"_");
   sourceCredit.title="Открыть страницу видео и сведения об авторе";
   sourceCredit.hidden=false;
   video.classList.add("is-loading");
   video.pause();
-  video.src=url;
+  video.removeAttribute("src");
+  video.load();
+  videoLoadTimer=setTimeout(()=>skipUnavailableVideo(key,token),22000);
+  const playableUrl=await resolvePlayableVideo(originalUrl);
+  if(token!==videoLoadToken||!current||current.key!==key)return;
+  video.src=playableUrl;
   video.load();
   const playResult=video.play();
   if(playResult&&typeof playResult.catch==="function")playResult.catch(()=>{});
-  videoLoadTimer=setTimeout(()=>skipUnavailableVideo(key,token),18000);
 }
 function openSpace(key){current={...data[key],key};failedVideoAttempts[key]=0;depthPanel.classList.remove("visible");depthToggle.hidden=false;index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);drawVideo(key);home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render();}
 function goHome(){learnFromVisit();depthPanel.classList.remove("visible");depthToggle.hidden=false;stopAtmosphere();feed.classList.remove("active","immersive");home.classList.add("active");video.pause();current=null;msg.classList.remove("is-changing");sub.classList.remove("is-changing")}
-video.addEventListener("loadeddata",()=>{if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}if(current)failedVideoAttempts[current.key]=0;video.classList.remove("is-loading");sourceCredit.hidden=false;});video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>{if(current)skipUnavailableVideo(current.key,videoLoadToken);});
+video.addEventListener("loadeddata",()=>{if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}if(current)failedVideoAttempts[current.key]=0;video.classList.remove("is-loading");sourceCredit.hidden=false;});video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>{const token=videoLoadToken;if(current&&video.currentSrc===video.src)skipUnavailableVideo(current.key,token);});
 let audioContext=null,ambientGain=null,ambientEnabled=false,spaceSoundNodes=[];
 function setSoundButton(){soundButton.setAttribute("aria-pressed",String(ambientEnabled));soundButton.setAttribute("aria-label",ambientEnabled?"Выключить звук атмосферы":"Включить звук атмосферы");soundButton.title=ambientEnabled?"Звук включён":"Звук выключен";soundButton.textContent=ambientEnabled?"◖))":"◖)";}
 function getAudioContext(){const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return null;audioContext=audioContext||new AudioCtx();return audioContext}
