@@ -25,7 +25,7 @@
 <section id="feed" class="screen" aria-live="polite"><div class="scene" id="scene"><video class="scene-video is-loading" id="scene-video" muted playsinline loop autoplay preload="none"></video><div class="orb"></div></div><header class="topbar"><button class="back" id="back" aria-label="На главный экран" title="На главный экран">←</button><button class="sound-toggle" id="sound-toggle" type="button" aria-label="Включить звук атмосферы" aria-pressed="false" title="Звук выключен">◖))</button></header><div class="content"><div class="message" id="message"></div><div class="submessage" id="submessage"></div><div class="interaction"><button class="depth-toggle" id="depth-toggle" type="button">Чуть глубже</button><div class="depth-panel" id="depth-panel"><p class="depth-copy" id="depth-copy"></p><div class="depth-actions"><button class="depth-action" id="depth-yes" type="button">Откликается</button><button class="depth-action" id="depth-close" type="button">Пока достаточно</button></div></div></div></div></section>
 <script>
 const data={
-anxiety:{name:"ТРЕВОГА",video:"https://commons.wikimedia.org/wiki/Special:FilePath/Storm_clouds,_Chicago.webm",scene:"radial-gradient(ellipse at 50% 42%,#344256,#1a2635 48%,#090d15)",orb:"#91a9c9",items:[
+anxiety:{name:"ТРЕВОГА",videos:["https://commons.wikimedia.org/wiki/Special:FilePath/Storm_clouds,_Chicago.webm","https://commons.wikimedia.org/wiki/Special:FilePath/Flight_over_clouds.webm"],scene:"radial-gradient(ellipse at 50% 42%,#344256,#1a2635 48%,#090d15)",orb:"#91a9c9",items:[
 ["Сейчас не обязательно находить решение.","Можно на время отложить всё, что требует ответа.","presence"],
 ["Если хочется, почувствуй опору под ногами.","Заметь поверхность, которая тебя держит. Не нужно менять дыхание или добиваться спокойствия.","support"],
 ["Что именно сейчас просит твоего внимания?","Не ищи правильный ответ. Может быть, это задача, разговор, усталость — или что-то совсем другое.","reflection"],
@@ -36,7 +36,7 @@ anxiety:{name:"ТРЕВОГА",video:"https://commons.wikimedia.org/wiki/Special
 ["Попробуй чуть отпустить плечи, если это приятно.","Или просто устройся удобнее. Ничего не должно получиться идеально.","support"],
 ["Чего тебе сейчас не хватает больше всего?","Ясности, времени, помощи, отдыха, ощущения безопасности? Можно просто заметить ответ.","reflection"]
 ]},
-emptiness:{name:"ПУСТОТА",video:"https://commons.wikimedia.org/wiki/Special:FilePath/Waves_of_the_sea_(Video).webm",scene:"radial-gradient(ellipse at 50% 45%,#343b49,#1a202b 48%,#090c12)",orb:"#8592a9",items:[
+emptiness:{name:"ПУСТОТА",videos:["https://commons.wikimedia.org/wiki/Special:FilePath/Waves_of_the_sea_(Video).webm","https://commons.wikimedia.org/wiki/Special:FilePath/Misty_river_47_seconds.webm","https://commons.wikimedia.org/wiki/Special:FilePath/StreamOfFlowingWater.webm"],scene:"radial-gradient(ellipse at 50% 45%,#343b49,#1a202b 48%,#090c12)",orb:"#8592a9",items:[
 ["Необязательно прямо сейчас что-то чувствовать.","Не нужно заполнять паузу словами или искать в ней скрытый смысл.","presence"],
 ["Заметь одну простую вещь вокруг, которая тебе нейтральна или приятна.","Свет на стене, ткань под рукой, звук за окном. Можно ничего не объяснять себе.","support"],
 ["Когда в последний раз тебе было хоть немного интересно?","Не обязательно радостно. Может быть, спокойно, любопытно или просто чуть легче.","reflection"],
@@ -47,7 +47,7 @@ emptiness:{name:"ПУСТОТА",video:"https://commons.wikimedia.org/wiki/Speci
 ["Попробуй на мгновение заметить контакт тела с опорой.","Спинка кресла, пол под ногами, поверхность кровати. Не нужно ничего чувствовать особенным образом.","support"],
 ["Чего тебе хотелось бы добавить в свою жизнь совсем понемногу?","Не большую цель — маленькую деталь, которую можно было бы впустить без обязательств.","reflection"]
 ]},
-loneliness:{name:"ОДИНОЧЕСТВО",video:"https://commons.wikimedia.org/wiki/Special:FilePath/Raindrops_against_the_window_in_the_night_city,_Las_Palmas.webm",scene:"radial-gradient(ellipse at 50% 43%,#493c52,#241e2d 48%,#0c0b12)",orb:"#b09ab8",items:[
+loneliness:{name:"ОДИНОЧЕСТВО",videos:["https://commons.wikimedia.org/wiki/Special:FilePath/Raindrops_against_the_window_in_the_night_city,_Las_Palmas.webm","https://commons.wikimedia.org/wiki/Special:FilePath/Rainy_night_in_Sham_Shui_Po.webm","https://commons.wikimedia.org/wiki/Special:FilePath/Misty_river_47_seconds.webm"],scene:"radial-gradient(ellipse at 50% 43%,#493c52,#241e2d 48%,#0c0b12)",orb:"#b09ab8",items:[
 ["Можно хотеть, чтобы кто-то был рядом.","В этом желании нет ничего, за что нужно себя осуждать.","presence"],
 ["Если захочется, вспомни человека, рядом с которым можно быть собой.","Не обязательно писать ему прямо сейчас. Достаточно заметить, кто приходит на ум.","support"],
 ["По какой близости ты скучаешь?","По разговору, молчанию рядом, прикосновению, общему делу или ощущению, что тебя помнят?","reflection"],
@@ -58,7 +58,7 @@ loneliness:{name:"ОДИНОЧЕСТВО",video:"https://commons.wikimedia.org/w
 ["Подумай, какой контакт был бы посильным сегодня.","Не самый смелый и не самый правильный — просто тот, на который у тебя есть силы.","support"],
 ["Что помогает тебе чувствовать связь с миром?","Люди, музыка, животные, знакомые места, общие интересы — у каждого это может быть своим.","reflection"]
 ]},
-sadness:{name:"ГРУСТЬ",video:"https://commons.wikimedia.org/wiki/Special:FilePath/Clouds_transformation.webm",scene:"radial-gradient(ellipse at 50% 44%,#514047,#292027 48%,#0d0b10)",orb:"#b18c88",items:[
+sadness:{name:"ГРУСТЬ",videos:["https://commons.wikimedia.org/wiki/Special:FilePath/Clouds_transformation.webm","https://commons.wikimedia.org/wiki/Special:FilePath/Snow_falling_in_Charlton_MA_2025-12-14.webm","https://commons.wikimedia.org/wiki/Special:FilePath/Golden_sunset_filmed_in_January.webm"],scene:"radial-gradient(ellipse at 50% 44%,#514047,#292027 48%,#0d0b10)",orb:"#b18c88",items:[
 ["Не нужно торопить себя через грусть.","Можно не превращать это чувство в задачу, которую надо срочно решить.","presence"],
 ["Попробуй выбрать для себя немного больше мягкости.","Тёплый напиток, удобное место, пауза или разговор — то, что сейчас действительно подходит.","support"],
 ["О чём может говорить эта грусть — если вообще что-то говорит?","О потере, перемене, усталости, несбывшемся ожидании? Необязательно находить объяснение.","reflection"],
@@ -116,7 +116,7 @@ sadness:[
 ]
 };
 
-let current=null,index=0,startY=0,lastTap=0,shown=[],itemStartedAt=0,lastCategory=null;
+let current=null,index=0,startY=0,lastTap=0,shown=[],itemStartedAt=0,lastCategory=null;const videoDecks={},lastVideoBySpace={};
 const home=document.querySelector("#home"),feed=document.querySelector("#feed"),scene=document.querySelector("#scene"),video=document.querySelector("#scene-video"),msg=document.querySelector("#message"),sub=document.querySelector("#submessage"),soundButton=document.querySelector("#sound-toggle"),depthToggle=document.querySelector("#depth-toggle"),depthPanel=document.querySelector("#depth-panel"),depthCopy=document.querySelector("#depth-copy"),depthYes=document.querySelector("#depth-yes"),depthClose=document.querySelector("#depth-close");
 const ADAPT_KEY="tishe_content_rhythm_v1";
 function readAdaptation(){try{return JSON.parse(localStorage.getItem(ADAPT_KEY)||"{}")}catch(e){return {}}}
@@ -125,8 +125,8 @@ function categoryScores(key){const all=readAdaptation();return all[key]||{presen
 function learnFromVisit(){if(!current||!itemStartedAt)return;const item=current.items[index],elapsed=(Date.now()-itemStartedAt)/1000,category=item[2];if(!category)return;const all=readAdaptation(),scores=all[current.key]||{presence:0,support:0,reflection:0};let delta=elapsed>=14?0.45:elapsed>=7?0.15:elapsed<3?-0.08:0;scores[category]=Math.max(-1.5,Math.min(2.5,(scores[category]||0)+delta));all[current.key]=scores;writeAdaptation(all);itemStartedAt=0}
 function chooseNext(){const remaining=current.items.map((item,i)=>({item,i})).filter(x=>!shown.includes(x.i));if(!remaining.length){shown=[];return chooseNext()}const scores=categoryScores(current.key);remaining.sort((a,b)=>{const score=x=>(scores[x.item[2]]||0)+(x.item[2]===lastCategory?-0.55:0)-(x.i/1000);return score(b)-score(a)});return remaining[0].i}
 function render(){const item=current.items[index];depthPanel.classList.remove("visible");depthToggle.hidden=false;depthYes.hidden=false;msg.classList.add("is-changing");sub.classList.add("is-changing");window.setTimeout(()=>{if(!current)return;msg.textContent=item[0];sub.textContent=item[1];requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},170);itemStartedAt=Date.now();lastCategory=item[2];depthCopy.textContent=deeper[current.key][index];if(!shown.includes(index))shown.push(index)}
-function next(){if(!current)return;learnFromVisit();index=chooseNext();render()}
-function openSpace(key){current={...data[key],key};depthPanel.classList.remove("visible");depthToggle.hidden=false;index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);video.classList.add("is-loading");video.pause();video.src=current.video;video.load();video.play().catch(()=>{});home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render();}
+function next(){if(!current)return;learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
+function drawVideo(key){let deck=videoDecks[key]||[];if(!deck.length){deck=data[key].videos.map((url,i)=>i);for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}if(deck.length>1&&deck[0]===lastVideoBySpace[key]){[deck[0],deck[1]]=[deck[1],deck[0]];}}const chosen=deck.shift();videoDecks[key]=deck;lastVideoBySpace[key]=chosen;const url=data[key].videos[chosen];video.classList.add("is-loading");video.pause();video.src=url;video.load();video.play().catch(()=>{});}\nfunction openSpace(key){current={...data[key],key};depthPanel.classList.remove("visible");depthToggle.hidden=false;index=0;shown=[];lastCategory=null;scene.style.setProperty("--scene",current.scene);scene.style.setProperty("--orb",current.orb);drawVideo(key);home.classList.remove("active");feed.classList.add("active");feed.classList.remove("immersive");render();}
 function goHome(){learnFromVisit();depthPanel.classList.remove("visible");depthToggle.hidden=false;stopAtmosphere();feed.classList.remove("active","immersive");home.classList.add("active");video.pause();current=null;msg.classList.remove("is-changing");sub.classList.remove("is-changing")}
 video.addEventListener("playing",()=>video.classList.remove("is-loading"));video.addEventListener("error",()=>video.classList.add("is-loading"));
 let audioContext=null,ambientGain=null,ambientEnabled=false,spaceSoundNodes=[];
