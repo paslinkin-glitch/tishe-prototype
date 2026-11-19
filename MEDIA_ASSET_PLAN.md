@@ -92,3 +92,27 @@
 - Некоторые найденные видео вертикальные или с заметным сюжетом. Для широкого интерфейса проверить центральный кроп и не показывать ролик, если важный объект обрезается.
 - Видео для восьми сцен не собирать в общий плейлист: каждому эпизоду соответствует только его собственный источник.
 - Публичная страница Pexels подтверждает бесплатный доступ к исходнику, но это не означает, что медиа уже загружено в GitHub. В текущем коммите добавлен каталог источников; бинарные файлы в `assets/solitude/` пока не копировались.
+
+
+## Pinterest — визуальные референсы для дальнейшего отбора
+
+Pinterest используем как источник визуального направления и поиска референсов, а не как хранилище файлов для прямого копирования. Изображения на Pinterest могут принадлежать авторам и иметь отдельные ограничения; скачивать и встраивать их в проект без проверки первоисточника и лицензии нельзя. Подходящий пин нужно открыть, перейти к оригинальному сайту/автору и проверить разрешение на использование.
+
+Подготовленные поисковые подборки (открываются в Pinterest):
+
+1. [Порог — cinematic dark doorway, empty corridor, blue grey atmosphere](https://www.pinterest.com/search/pins/?q=cinematic%20dark%20doorway%20empty%20corridor%20blue%20grey)
+2. [Лицо для других — mirror reflection, partial face, dark cinematic photography](https://www.pinterest.com/search/pins/?q=mirror%20reflection%20partial%20face%20dark%20cinematic%20photography)
+3. [То, чего хочется — silhouette by window, mist, muted cinematic still](https://www.pinterest.com/search/pins/?q=silhouette%20by%20window%20mist%20muted%20cinematic%20still)
+4. [Шаг назад — closing door, narrow line of light, dark interior](https://www.pinterest.com/search/pins/?q=closing%20door%20narrow%20line%20of%20light%20dark%20interior)
+5. [Тёмная комната — dark atmospheric architecture, deep perspective, subtle light](https://www.pinterest.com/search/pins/?q=dark%20atmospheric%20architecture%20deep%20perspective%20subtle%20light)
+6. [Тот, кто ждёт — solitary figure sitting on bed, low light, cinematic](https://www.pinterest.com/search/pins/?q=solitary%20figure%20sitting%20on%20bed%20low%20light%20cinematic)
+7. [Возможность встречи — two distant silhouettes, twilight, quiet atmosphere](https://www.pinterest.com/search/pins/?q=two%20distant%20silhouettes%20twilight%20quiet%20cinematic)
+8. [Возвращение — arched corridor, vanishing point, dim silver light](https://www.pinterest.com/search/pins/?q=arched%20corridor%20vanishing%20point%20dim%20silver%20light)
+
+### Общий визуальный поиск
+
+- [Moody blue and muted vintage pink palette](https://www.pinterest.com/search/pins/?q=moody%20blue%20muted%20vintage%20pink%20cinematic%20palette)
+- [Analog film still, low saturation, soft grain](https://www.pinterest.com/search/pins/?q=analog%20film%20still%20low%20saturation%20soft%20grain)
+- [Minimalist surreal architecture, quiet empty spaces](https://www.pinterest.com/search/pins/?q=minimalist%20surreal%20architecture%20quiet%20empty%20spaces)
+
+Критерии отбора: графитово-синий и сливово-серый диапазон; низкая насыщенность; крупные тихие пространства; один смысловой акцент; без яркого оранжевого заката, неона, хоррора, постановочной романтики и текста на изображении. Эти ссылки — поисковые страницы Pinterest, не подтверждённые отдельные пины и не лицензии на использование.
