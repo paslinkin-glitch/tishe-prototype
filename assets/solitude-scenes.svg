@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+ <linearGradient id="night" x2="0" y2="1"><stop stop-color="#090b14"/><stop offset=".55" stop-color="#211a29"/><stop offset="1" stop-color="#080a11"/></linearGradient>
+ <linearGradient id="dawn" x2="0" y2="1"><stop stop-color="#302535"/><stop offset=".48" stop-color="#98788b"/><stop offset="1" stop-color="#17141f"/></linearGradient>
+ <linearGradient id="gold" x2="0" y2="1"><stop stop-color="#f0d8d5" stop-opacity=".75"/><stop offset="1" stop-color="#c99db8" stop-opacity="0"/></linearGradient>
+ <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#6f586e" stop-opacity=".3"/><stop offset="1" stop-color="#080a10"/></linearGradient>
+ <radialGradient id="halo"><stop stop-color="#e5c2d5" stop-opacity=".5"/><stop offset="1" stop-color="#b78cae" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="38"/></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="9"/></filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .55 0 0 0 0 .48 0 0 0 0 .55 0 0 0 .13 0"/></filter>
+ <linearGradient id="figure" x2="1"><stop stop-color="#080a12"/><stop offset=".52" stop-color="#342a3a"/><stop offset="1" stop-color="#080a12"/></linearGradient>
+</defs>
+<symbol id="arrival" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/><ellipse cx="800" cy="410" rx="420" ry="330" fill="url(#halo)" filter="url(#blur)"/>
+ <path d="M0 900V0h1600v900H0Z" fill="#05070d" opacity=".18"/>
+ <path d="M590 690V355a210 210 0 0 1 420 0v335" fill="#0a0b13" stroke="#c9aabe" stroke-opacity=".42" stroke-width="3"/>
+ <path d="M635 690V360a165 165 0 0 1 330 0v330" fill="url(#gold)" opacity=".2"/>
+ <path d="M0 720Q420 640 800 730T1600 710V900H0Z" fill="url(#floor)"/>
+ <path d="M800 690L570 900M800 690l230 210" stroke="#d7bfd0" stroke-opacity=".13" stroke-width="2"/>
+ <g fill="#cbb2c5" opacity=".55"><circle cx="260" cy="280" r="2"/><circle cx="1310" cy="330" r="2"/><circle cx="1180" cy="190" r="1.5"/></g>
+</symbol>
+<symbol id="mask" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/><ellipse cx="820" cy="410" rx="300" ry="360" fill="url(#halo)" filter="url(#blur)"/>
+ <path d="M0 0h1600v900H0Z" fill="#080a12" opacity=".25"/>
+ <path d="M800 160C650 160 570 300 595 475c20 150 100 245 205 270 105-25 185-120 205-270 25-175-55-315-205-315Z" fill="url(#figure)" stroke="#d5b8ca" stroke-opacity=".55" stroke-width="3"/>
+ <path d="M640 420q70-45 135 0M825 420q70-45 135 0" fill="none" stroke="#ead8df" stroke-opacity=".75" stroke-width="5"/>
+ <path d="M800 420l-38 115 38 16 38-16Z" fill="#0b0c14" stroke="#c6a8bd" stroke-opacity=".3"/>
+ <path d="M720 630q80 35 160 0" fill="none" stroke="#e4cbd7" stroke-opacity=".55" stroke-width="3"/>
+ <path d="M0 760Q800 690 1600 760v140H0Z" fill="url(#floor)"/>
+ <path d="M800 0v135" stroke="#d8bacd" stroke-opacity=".15" stroke-width="2"/>
+</symbol>
+<symbol id="longing" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/><ellipse cx="800" cy="470" rx="550" ry="360" fill="url(#halo)" filter="url(#blur)"/>
+ <path d="M0 0h1600v900H0Z" fill="#090a12" opacity=".24"/>
+ <path d="M500 730V400a300 300 0 0 1 600 0v330" fill="#090a12" stroke="#d9bdcf" stroke-opacity=".42" stroke-width="4"/>
+ <path d="M565 730V410a235 235 0 0 1 470 0v320" fill="url(#dawn)" opacity=".42"/>
+ <path d="M800 170v510" stroke="#f0d9e2" stroke-opacity=".8" stroke-width="3"/>
+ <path d="M800 170l-180 560M800 170l180 560" stroke="#e4c5d7" stroke-opacity=".12" stroke-width="2"/>
+ <path d="M0 740Q400 680 800 740t800 0v160H0Z" fill="url(#floor)"/>
+ <path d="M800 730v170" stroke="#f1dce4" stroke-opacity=".2" stroke-width="2"/>
+</symbol>
+<symbol id="withdrawal" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#090b13"/><path d="M0 0h1600v900H0Z" fill="url(#night)"/>
+ <path d="M390 130h820v770H390Z" fill="#11111b" stroke="#776477" stroke-opacity=".22" stroke-width="3"/>
+ <path d="M560 150h480v750H560Z" fill="#060810" stroke="#c5aabd" stroke-opacity=".25" stroke-width="3"/>
+ <path d="M560 150l420 55v695H560Z" fill="#17131f" stroke="#b99caf" stroke-opacity=".25" stroke-width="2"/>
+ <path d="M980 205v695" stroke="#d6b6ca" stroke-opacity=".2" stroke-width="2"/>
+ <circle cx="930" cy="550" r="7" fill="#e2c6d6" opacity=".8"/><circle cx="930" cy="550" r="30" fill="#d5b1ca" opacity=".15" filter="url(#soft)"/>
+ <path d="M0 760Q800 650 1600 760v140H0Z" fill="url(#floor)"/>
+ <path d="M0 0l360 0v900H0ZM1240 0h360v900h-360Z" fill="#03050b" opacity=".55"/>
+</symbol>
+<symbol id="shadow" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/><ellipse cx="800" cy="430" rx="390" ry="330" fill="url(#halo)" filter="url(#blur)" opacity=".65"/>
+ <path d="M0 0h1600v900H0Z" fill="#05070e" opacity=".22"/>
+ <path d="M710 690c-10-130 8-240 90-280 82 40 100 150 90 280l90 210H620Z" fill="#020309"/>
+ <circle cx="800" cy="345" r="62" fill="#05060c"/>
+ <path d="M875 420c95-35 180 20 215 130 25 80 20 190 55 350H960c-30-150-15-280-85-480Z" fill="#9b8095" opacity=".2" filter="url(#soft)"/>
+ <path d="M0 760Q800 680 1600 760v140H0Z" fill="url(#floor)"/>
+ <path d="M800 150v540" stroke="#d4b4c9" stroke-opacity=".12" stroke-width="2"/>
+</symbol>
+<symbol id="vulnerable" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/><ellipse cx="800" cy="420" rx="250" ry="250" fill="url(#halo)" filter="url(#blur)"/>
+ <circle cx="800" cy="405" r="48" fill="#f0d9dc"/><circle cx="800" cy="405" r="90" fill="#d9b3c9" opacity=".13" filter="url(#soft)"/>
+ <path d="M800 500v190" stroke="#e5c9d9" stroke-opacity=".65" stroke-width="2"/>
+ <path d="M0 710Q400 670 800 720t800-10v190H0Z" fill="url(#floor)"/>
+ <path d="M0 0h1600v900H0Z" fill="#070911" opacity=".24"/>
+ <g stroke="#d9c0d1" stroke-opacity=".18" fill="none"><path d="M800 700L520 900M800 700l280 200"/><path d="M800 700L300 900M800 700l500 200"/></g>
+</symbol>
+<symbol id="meeting" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/><ellipse cx="800" cy="420" rx="520" ry="340" fill="url(#halo)" filter="url(#blur)"/>
+ <path d="M480 720V420a320 320 0 0 1 640 0v300" fill="#0b0b14" stroke="#d4b7ca" stroke-opacity=".3" stroke-width="3"/>
+ <path d="M0 740Q800 650 1600 740v160H0Z" fill="url(#floor)"/>
+ <circle cx="620" cy="540" r="43" fill="#0a0b13"/><path d="M560 720q10-140 60-160 50 20 60 160Z" fill="url(#figure)"/>
+ <circle cx="980" cy="540" r="43" fill="#17121d"/><path d="M920 720q10-140 60-160 50 20 60 160Z" fill="url(#figure)"/>
+ <path d="M690 690Q800 610 910 690" fill="none" stroke="#e3c8d8" stroke-opacity=".32" stroke-width="3"/>
+</symbol>
+<symbol id="return" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#dawn)"/><ellipse cx="800" cy="390" rx="500" ry="400" fill="url(#halo)" filter="url(#blur)"/>
+ <circle cx="800" cy="425" r="210" fill="none" stroke="#ead3df" stroke-opacity=".4" stroke-width="3"/>
+ <circle cx="800" cy="425" r="165" fill="none" stroke="#ead3df" stroke-opacity=".18" stroke-width="2"/>
+ <path d="M0 700Q800 620 1600 700v200H0Z" fill="url(#floor)"/>
+ <path d="M800 640v260M590 900l210-260 210 260" fill="none" stroke="#e6cad9" stroke-opacity=".2" stroke-width="2"/>
+ <path d="M0 0h1600v900H0Z" fill="#080a12" opacity=".12"/>
+</symbol>
+</svg>
