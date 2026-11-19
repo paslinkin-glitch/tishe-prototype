@@ -210,6 +210,23 @@
 #feed.jung-space .scene:after{z-index:4}
 #feed.jung-space .content{z-index:6;pointer-events:none}
 #feed.jung-space .content .interaction,#feed.jung-space .content button{pointer-events:auto}
+/* Portrait phones: keep the footage as the environment and use the compact chapter glyphs. */
+@media (max-width: 600px) and (orientation: portrait){
+  #feed.jung-space .world-painting{display:none!important}
+  #feed.jung-space .world-symbol{display:block!important;z-index:5!important;left:50%;top:35%;width:clamp(76px,22vw,104px);height:clamp(100px,30vw,138px);opacity:.9}
+  #feed.jung-space[data-phase="arrival"] .world-symbol{width:clamp(92px,27vw,124px);height:clamp(150px,42vw,190px);top:35%}
+  #feed.jung-space[data-phase="mask"] .world-symbol{width:clamp(76px,22vw,96px);height:clamp(104px,30vw,132px);top:35%;box-shadow:0 0 28px #c7a8bd22}
+  #feed.jung-space[data-phase="mask"] .world-symbol:before{left:18%;top:42%;width:16%;height:2px;box-shadow:24px 0 #e5d3dc88}
+  #feed.jung-space[data-phase="mask"] .world-symbol:after{left:34%;bottom:19%;width:32%;height:1px}
+  #feed.jung-space[data-phase="longing"] .world-symbol{width:clamp(150px,48vw,205px);height:clamp(90px,28vw,120px);top:34%}
+  #feed.jung-space[data-phase="withdrawal"] .world-symbol{width:clamp(82px,24vw,108px);height:clamp(150px,44vw,190px);top:36%}
+  #feed.jung-space[data-phase="shadow"] .world-symbol{width:clamp(72px,21vw,96px);height:clamp(140px,40vw,176px);top:37%}
+  #feed.jung-space[data-phase="vulnerable"] .world-symbol{width:clamp(38px,10vw,48px);height:clamp(38px,10vw,48px);top:35%}
+  #feed.jung-space[data-phase="meeting"] .world-symbol{width:clamp(170px,50vw,220px);height:clamp(110px,32vw,140px);top:35%}
+  #feed.jung-space[data-phase="return"] .world-symbol{width:clamp(150px,46vw,200px);height:clamp(150px,46vw,200px);top:34%}
+  #feed.jung-space .world-webgl{opacity:.28}
+  #feed.jung-space .world-atmosphere{opacity:.3}
+}
 /* Keep navigation above all visual canvases and pseudo-element overlays. */
 #feed .topbar{z-index:30;pointer-events:none}
 #feed .topbar .back{position:relative;z-index:31;pointer-events:auto;touch-action:manipulation}
