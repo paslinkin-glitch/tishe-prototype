@@ -103,3 +103,19 @@
 - **Пустота:** отстранённость → сгущение тумана → неподвижность → просвет и первый свет.
 - **Одиночество:** город издали → пустые ночные пространства → огни на окраине → одиночное движение и возвращение контакта.
 - **Грусть:** уходящий свет → память и берег → волны и сопротивление → более спокойная вода.
+
+## «Одиночество» — восемь сцен интерактивной истории
+
+Эти материалы подключены в `index.html` как ссылки на страницы Pexels. Они **не загружаются и не воспроизводятся внутри сцены**. В интерфейсе появляется компактная ссылка «видеоматериал ↗», открывающая страницу источника.
+
+1. **Порог** — [The door to the dark room is open](https://www.pexels.com/video/the-door-to-the-dark-room-is-open-26791723/)
+2. **Лицо для других** — [A man looking at himself in the mirror](https://www.pexels.com/video/a-man-looking-at-himself-in-the-mirror-7326751/)
+3. **То, чего хочется** — [Man looking through window](https://www.pexels.com/video/man-looking-through-window-10802605/)
+4. **Шаг назад** — [Woman closing a door](https://www.pexels.com/video/woman-closing-a-door-9563520/)
+5. **Тёмная комната** — видео намеренно не добавлено; используется авторская SVG-сцена `shadow`, чтобы не свести внутренний конфликт к буквальному хоррор-образу.
+6. **Тот, кто ждёт** — [A man seated on the corner of his bed in a darkroom](https://www.pexels.com/video/a-man-seated-on-the-corner-of-his-bed-in-a-darkroom-3712707/)
+7. **Возможность встречи** — [Silhouette of two people conversing at twilight](https://www.pexels.com/video/silhouette-of-two-people-conversing-at-twilight-34659649/)
+8. **Возвращение** — [Man walking in historical arched corridor](https://www.pexels.com/video/man-walking-in-historical-arched-corridor-36893300/)
+
+Перед использованием или публикацией проверьте актуальные условия [Pexels License](https://www.pexels.com/license/) и сохраните сведения об авторе и дате получения каждого материала. Страницы источников не являются подтверждением наличия прямого MP4 URL или права на любое отдельное использование вне лицензии.
+
