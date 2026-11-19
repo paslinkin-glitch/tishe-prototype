@@ -206,6 +206,7 @@ async function resolvePlayableVideo(url){
   return url;
 }
 async function drawVideo(key){
+  if(key==="loneliness"){if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}videoLoadToken++;video.pause();video.removeAttribute("src");video.load();video.classList.add("is-loading");return;}
   if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}
   const token=++videoLoadToken;
   const list=data[key].videos;
