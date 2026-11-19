@@ -270,7 +270,7 @@ function animateSolitudeThree(){
 function startSolitudeThree(){cancelAnimationFrame(solitudeThreeRAF);if(!document.hidden&&!solitudeThreeFailed)solitudeThreeRAF=requestAnimationFrame(animateSolitudeThree);}
 function stopSolitudeThree(){cancelAnimationFrame(solitudeThreeRAF);solitudeThreeRAF=0;}
 document.addEventListener("visibilitychange",()=>{if(document.hidden){stopSolitudeThree();}else if(current&&current.key==="loneliness"){startSolitudeThree();}});
-solitudeWebGL.addEventListener("pointermove",e=>{const r=solitudeWebGL.getBoundingClientRect();solitudeThreePointer.tx=(e.clientX-r.left)/r.width-.5;solitudeThreePointer.ty=(e.clientY-r.top)/r.height-.5;},{passive:true});
+feed.addEventListener("pointermove",e=>{if(!feed.classList.contains("jung-space"))return;const r=solitudeWebGL.getBoundingClientRect();solitudeThreePointer.tx=(e.clientX-r.left)/Math.max(1,r.width)-.5;solitudeThreePointer.ty=(e.clientY-r.top)/Math.max(1,r.height)-.5;},{passive:true});
 
 let solitudeRAF=0,solitudeStart=0,solitudePointer={x:.5,y:.5,tx:.5,ty:.5},solitudeParticles=Array.from({length:46},(_,i)=>({x:(i*0.61803398875)%1,y:(i*0.754877666)%1,r:.35+(i%4)*.28,a:.08+(i%5)*.025,v:.000035+(i%6)*.000012}));
 function drawSolitudeAtmosphere(now){
