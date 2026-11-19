@@ -148,6 +148,9 @@
 #feed.jung-space .world-painting{opacity:.22!important;mix-blend-mode:screen}
 #feed.jung-space .scene-video:not(.is-loading){opacity:.36;mix-blend-mode:screen}
 #feed.jung-space .scene:after{background:linear-gradient(180deg,#08091030 0%,transparent 25%,#08091035 52%,#080910ee 100%),linear-gradient(90deg,#07081035,transparent 24%,transparent 76%,#07081035)}
+/* The story is a continuous in-page feed: source credits never become navigation controls. */
+#video-source-link{display:none!important;pointer-events:none!important}
+#feed.jung-space .scene-video{z-index:1;pointer-events:none;}
 </style></head>
 <body>
 <main id="home" class="screen active"><div class="home-inner"><div class="eyebrow">место, где можно быть</div><h1 class="brand">ПРОСТРАНСТВО</h1><p class="intro">Выбери пространство, которое сейчас ближе.</p><div class="spaces">
@@ -295,17 +298,19 @@ function playSolitudeVideo(item){
   if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}
   video.pause();
   video.muted=true;
+  video.playsInline=true;
+  video.preload="auto";
   video.removeAttribute("src");
   video.load();
-  if(!item.videoPlayback){video.classList.add("is-loading");return;}
   video.classList.add("is-loading");
+  if(!item.videoPlayback)return;
   video.src=item.videoPlayback;
   video.load();
-  videoLoadTimer=setTimeout(()=>{if(token===videoLoadToken)video.classList.add("is-loading");},12000);
+  videoLoadTimer=setTimeout(()=>{if(token===videoLoadToken){video.classList.add("is-loading");}},18000);
   const result=video.play();
-  if(result&&typeof result.catch==="function")result.catch(()=>video.classList.add("is-loading"));
+  if(result&&typeof result.catch==="function")result.catch(()=>{if(token===videoLoadToken)video.classList.add("is-loading");});
 }
-function render(){const progress=document.querySelector("#feed-progress");if(progress){progress.hidden=current.key==="loneliness";if(!progress.hidden)progress.textContent=String(index+1).padStart(2,"0")+" / "+String(current.items.length).padStart(2,"0");}if(current&&current.key==="loneliness"){const s=jungStory[index];feed.dataset.phase=s.symbol;document.querySelector("#world-painting-use").setAttribute("href","assets/solitude-scenes.svg#"+s.symbol);document.querySelector("#world-mark").textContent=s.chapter+"  ·  "+String(index+1).padStart(2,"0")+" / "+String(jungStory.length).padStart(2,"0");const sourceLink=document.querySelector("#video-source-link");if(s.videoSource){sourceLink.href=s.videoSource;sourceLink.classList.add("visible");}else{sourceLink.removeAttribute("href");sourceLink.classList.remove("visible");}const solitudePhotos=["5933191","14874383","32960953","39972076","25237316","8860203","19602602","15113466"];const photoId=solitudePhotos[index]||solitudePhotos[0];scene.style.backgroundImage='linear-gradient(180deg,#08091022 0%,#08091030 38%,#080910d9 100%),url("https://images.pexels.com/photos/'+photoId+'/pexels-photo-'+photoId+'.jpeg?auto=compress&cs=tinysrgb&w=1600")';scene.style.backgroundSize="cover";scene.style.backgroundPosition="center";playSolitudeVideo(s);depthPanel.classList.remove("visible");depthYes.hidden=false;depthYes.textContent="Оставить здесь";msg.classList.add("is-changing");sub.classList.add("is-changing");window.setTimeout(()=>{if(!current||current.key!=="loneliness")return;msg.textContent=s.text;sub.textContent=s.sub;requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},260);depthCopy.textContent=s.question+"\n\n"+s.pause;itemStartedAt=Date.now();return;}const item=current.items[index];depthPanel.classList.remove("visible");depthYes.hidden=false;msg.classList.add("is-changing");sub.classList.add("is-changing");window.setTimeout(()=>{if(!current)return;msg.textContent=item[0];sub.textContent=item[1];requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},170);itemStartedAt=Date.now();lastCategory=item[2];depthCopy.textContent=deeper[current.key][index];if(!shown.includes(index))shown.push(index)}
+function render(){const progress=document.querySelector("#feed-progress");if(progress){progress.hidden=current.key==="loneliness";if(!progress.hidden)progress.textContent=String(index+1).padStart(2,"0")+" / "+String(current.items.length).padStart(2,"0");}if(current&&current.key==="loneliness"){const s=jungStory[index];feed.dataset.phase=s.symbol;document.querySelector("#world-painting-use").setAttribute("href","assets/solitude-scenes.svg#"+s.symbol);document.querySelector("#world-mark").textContent=s.chapter+"  ·  "+String(index+1).padStart(2,"0")+" / "+String(jungStory.length).padStart(2,"0");const sourceLink=document.querySelector("#video-source-link");sourceLink.removeAttribute("href");sourceLink.classList.remove("visible");const solitudePhotos=["5933191","14874383","32960953","39972076","25237316","8860203","19602602","15113466"];const photoId=solitudePhotos[index]||solitudePhotos[0];scene.style.backgroundImage='linear-gradient(180deg,#08091022 0%,#08091030 38%,#080910d9 100%),url("https://images.pexels.com/photos/'+photoId+'/pexels-photo-'+photoId+'.jpeg?auto=compress&cs=tinysrgb&w=1600")';scene.style.backgroundSize="cover";scene.style.backgroundPosition="center";playSolitudeVideo(s);depthPanel.classList.remove("visible");depthYes.hidden=false;depthYes.textContent="Оставить здесь";msg.classList.add("is-changing");sub.classList.add("is-changing");window.setTimeout(()=>{if(!current||current.key!=="loneliness")return;msg.textContent=s.text;sub.textContent=s.sub;requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},260);depthCopy.textContent=s.question+"\n\n"+s.pause;itemStartedAt=Date.now();return;}const item=current.items[index];depthPanel.classList.remove("visible");depthYes.hidden=false;msg.classList.add("is-changing");sub.classList.add("is-changing");window.setTimeout(()=>{if(!current)return;msg.textContent=item[0];sub.textContent=item[1];requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},170);itemStartedAt=Date.now();lastCategory=item[2];depthCopy.textContent=deeper[current.key][index];if(!shown.includes(index))shown.push(index)}
 function next(){if(!current)return;if(current.key==="loneliness"){if(index<jungStory.length-1){index++;render()}else{goHome()}return;}if(current.key==="emptiness"){if(index<current.items.length-1){index++;drawVideo(current.key);render()}else{goHome()}return;}learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
 function skipUnavailableVideo(key,token){
   if(token!==videoLoadToken||!current||current.key!==key)return;
