@@ -227,6 +227,24 @@
   #feed.jung-space .world-webgl{opacity:.28}
   #feed.jung-space .world-atmosphere{opacity:.3}
 }
+/* Solitude visual hierarchy: cinematic footage first, generative Canvas atmosphere above it. */
+#feed.jung-space .scene-video{z-index:1!important;display:block!important;opacity:.94!important;visibility:visible!important;filter:brightness(.9) saturate(.82) contrast(1.02)!important;mix-blend-mode:normal!important}
+#feed.jung-space .scene-video.is-loading{opacity:0!important}
+#feed.jung-space .world-painting{display:none!important}
+#feed.jung-space .world-atmosphere{display:block!important;position:absolute;inset:0;width:100%;height:100%;z-index:2!important;opacity:1!important;mix-blend-mode:screen;pointer-events:none}
+#feed.jung-space .world-webgl{z-index:2!important;opacity:.12!important;mix-blend-mode:screen}
+#feed.jung-space .world-architecture:after{z-index:3!important;background:linear-gradient(180deg,#08091018 0%,transparent 34%,#08091045 100%)!important;mix-blend-mode:normal!important}
+#feed.jung-space .scene:before{z-index:3!important;background:radial-gradient(ellipse at 50% 42%,transparent 18%,#08091020 100%)!important}
+#feed.jung-space .scene:after{z-index:4!important;background:linear-gradient(180deg,#08091022 0%,transparent 32%,#08091018 55%,#080910c9 100%)!important}
+#feed.jung-space .content{z-index:6!important}
+#feed.jung-space[data-phase="arrival"] .scene-video{filter:brightness(.88) saturate(.78) contrast(1.02)!important}
+#feed.jung-space[data-phase="mask"] .scene-video{filter:brightness(.82) saturate(.68) contrast(1.06)!important}
+#feed.jung-space[data-phase="longing"] .scene-video{filter:brightness(.94) saturate(.86) contrast(1.01)!important}
+#feed.jung-space[data-phase="withdrawal"] .scene-video{filter:brightness(.76) saturate(.58) contrast(1.08)!important}
+#feed.jung-space[data-phase="shadow"] .scene-video{filter:brightness(.7) saturate(.52) contrast(1.1)!important}
+#feed.jung-space[data-phase="vulnerable"] .scene-video{filter:brightness(.92) saturate(.8) contrast(1.01)!important}
+#feed.jung-space[data-phase="meeting"] .scene-video{filter:brightness(.94) saturate(.88) contrast(1.01)!important}
+#feed.jung-space[data-phase="return"] .scene-video{filter:brightness(.98) saturate(.9) contrast(1.01)!important}
 /* Keep navigation above all visual canvases and pseudo-element overlays. */
 #feed .topbar{z-index:30;pointer-events:none}
 #feed .topbar .back{position:relative;z-index:31;pointer-events:auto;touch-action:manipulation}
@@ -298,23 +316,58 @@ function stopSolitudeThree(){cancelAnimationFrame(solitudeThreeRAF);solitudeThre
 document.addEventListener("visibilitychange",()=>{if(document.hidden){stopSolitudeThree();}else if(current&&current.key==="loneliness"){startSolitudeThree();}});
 
 
-let solitudeRAF=0,solitudeStart=0,solitudePointer={x:.5,y:.5,tx:.5,ty:.5},solitudeParticles=Array.from({length:46},(_,i)=>({x:(i*0.61803398875)%1,y:(i*0.754877666)%1,r:.35+(i%4)*.28,a:.08+(i%5)*.025,v:.000035+(i%6)*.000012}));
+let solitudeRAF=0,solitudeStart=0,solitudePointer={x:.5,y:.5,tx:.5,ty:.5};
+const solitudeParticles=Array.from({length:64},(_,i)=>({x:(i*.61803398875)%1,y:(i*.754877666)%1,r:.35+(i%5)*.32,a:.12+(i%6)*.025,v:.000012+(i%7)*.000006,phase:i*1.71}));
+const solitudePalettes={
+ arrival:{fog:[174,166,190],beam:[206,190,208],deep:[13,16,28],strength:1},
+ mask:{fog:[171,151,173],beam:[213,194,207],deep:[13,12,22],strength:.82},
+ longing:{fog:[190,164,177],beam:[231,202,198],deep:[18,15,25],strength:1.12},
+ withdrawal:{fog:[119,128,157],beam:[159,174,194],deep:[7,11,20],strength:.55},
+ shadow:{fog:[112,104,139],beam:[151,137,174],deep:[5,6,14],strength:.38},
+ vulnerable:{fog:[198,171,181],beam:[232,207,208],deep:[16,14,24],strength:1.08},
+ meeting:{fog:[174,168,188],beam:[211,203,219],deep:[12,14,25],strength:.94},
+ return:{fog:[194,178,188],beam:[229,211,215],deep:[15,16,26],strength:1.16}
+};
 function drawSolitudeAtmosphere(now){
  if(!feed.classList.contains("jung-space")){solitudeRAF=0;return;}
  const dpr=Math.min(devicePixelRatio||1,1.5),w=Math.max(1,Math.floor(solitudeCanvas.clientWidth*dpr)),h=Math.max(1,Math.floor(solitudeCanvas.clientHeight*dpr));
  if(solitudeCanvas.width!==w||solitudeCanvas.height!==h){solitudeCanvas.width=w;solitudeCanvas.height=h;}
- const c=solitudeCtx;c.clearRect(0,0,w,h);solitudePointer.x+=(solitudePointer.tx-solitudePointer.x)*.018;solitudePointer.y+=(solitudePointer.ty-solitudePointer.y)*.018;
- const phase=feed.dataset.phase||"arrival",t=now*.001,shift=(solitudePointer.x-.5)*w*.018;
- const haze=c.createRadialGradient(w*(.5+solitudePointer.x*.018),h*(.38+solitudePointer.y*.012),0,w*.5,h*.46,w*.68);
- haze.addColorStop(0,phase==="shadow"?"rgba(20,17,29,.02)":"rgba(190,164,185,.075)");haze.addColorStop(.55,"rgba(150,137,164,.025)");haze.addColorStop(1,"rgba(4,6,12,.18)");c.fillStyle=haze;c.fillRect(0,0,w,h);
- for(let i=0;i<3;i++){const x=w*(.18+i*.32)+Math.sin(t*.11+i*2.1)*w*.035+shift;const beam=c.createLinearGradient(x,0,x+w*.12,h*.76);beam.addColorStop(0,"rgba(210,194,211,0)");beam.addColorStop(.48,phase==="withdrawal"||phase==="shadow"?"rgba(175,158,185,.008)":"rgba(210,194,211,.025)");beam.addColorStop(1,"rgba(210,194,211,0)");c.fillStyle=beam;c.beginPath();c.moveTo(x-w*.025,0);c.lineTo(x+w*.12,0);c.lineTo(x+w*.28,h);c.lineTo(x+w*.04,h);c.closePath();c.fill();}
- solitudeParticles.forEach((p,i)=>{p.y-=p.v*(now-(solitudeStart||now));if(p.y<-.02)p.y=1.02;const x=(p.x*w+Math.sin(t*.16+i)*w*.006+shift+w)%w,y=p.y*h;c.beginPath();c.arc(x,y,p.r*dpr,0,Math.PI*2);c.fillStyle="rgba(226,215,226,"+(phase==="shadow"?p.a*.35:p.a)+")";c.fill();});
- const vign=c.createRadialGradient(w*.5,h*.43,Math.min(w,h)*.22,w*.5,h*.48,Math.max(w,h)*.72);vign.addColorStop(0,"rgba(0,0,0,0)");vign.addColorStop(1,"rgba(3,5,11,.27)");c.fillStyle=vign;c.fillRect(0,0,w,h);
+ const c=solitudeCtx;c.clearRect(0,0,w,h);
+ solitudePointer.x+=(solitudePointer.tx-solitudePointer.x)*.018;solitudePointer.y+=(solitudePointer.ty-solitudePointer.y)*.018;
+ const phase=feed.dataset.phase||"arrival",p=solitudePalettes[phase]||solitudePalettes.arrival,t=now*.001;
+ const px=(solitudePointer.x-.5),py=(solitudePointer.y-.5),shift=px*w*.035;
+ const rgb=(a,k)=>`rgba(${a[0]},${a[1]},${a[2]},${k})`;
+ // Ambient depth: broad low-opacity fog, with a slow independent drift.
+ const fog=c.createRadialGradient(w*(.5+px*.12),h*(.39+py*.08),0,w*.5,h*.48,Math.max(w,h)*.78);
+ fog.addColorStop(0,rgb(p.fog,.13*p.strength));fog.addColorStop(.42,rgb(p.fog,.065*p.strength));fog.addColorStop(1,rgb(p.deep,.13));
+ c.fillStyle=fog;c.fillRect(0,0,w,h);
+ // Long soft light streams that move slowly across the scene.
+ for(let i=0;i<4;i++){
+  const x=w*(.12+i*.27)+Math.sin(t*.095+i*1.9)*w*.045+shift;
+  const drift=Math.sin(t*.13+i*2.4)*w*.035;
+  const beam=c.createLinearGradient(x,0,x+w*.2,h*.82);
+  beam.addColorStop(0,rgb(p.beam,0));beam.addColorStop(.48,rgb(p.beam,(.026+(i%2)*.012)*p.strength));beam.addColorStop(1,rgb(p.beam,0));
+  c.fillStyle=beam;c.beginPath();c.moveTo(x-w*.045,0);c.lineTo(x+w*.075,0);c.lineTo(x+w*.23+drift,h);c.lineTo(x+w*.04,h);c.closePath();c.fill();
+ }
+ // A thin atmospheric veil close to the lower horizon.
+ const mist=c.createLinearGradient(0,h*.34,0,h*.9);
+ mist.addColorStop(0,"rgba(0,0,0,0)");mist.addColorStop(.48,rgb(p.fog,.035*p.strength));mist.addColorStop(1,"rgba(5,7,14,.13)");
+ c.fillStyle=mist;c.fillRect(0,h*.3,w,h*.65);
+ // Dust-like particles: subtle, drifting at different depths.
+ for(const dot of solitudeParticles){
+  const x=(dot.x*w+Math.sin(t*.12+dot.phase)*w*.009+shift+w)%w;
+  const y=((dot.y-dot.v*now*.045+1.2)%1.2)*h;
+  const pulse=.65+.35*Math.sin(t*.42+dot.phase);
+  c.beginPath();c.arc(x,y,dot.r*dpr,0,Math.PI*2);
+  c.fillStyle=rgb(p.beam,dot.a*pulse*(phase==="shadow"?.48:1));c.fill();
+ }
+ const vign=c.createRadialGradient(w*.5,h*.43,Math.min(w,h)*.2,w*.5,h*.48,Math.max(w,h)*.76);
+ vign.addColorStop(0,"rgba(0,0,0,0)");vign.addColorStop(1,"rgba(2,4,10,.2)");c.fillStyle=vign;c.fillRect(0,0,w,h);
  solitudeStart=now;solitudeRAF=requestAnimationFrame(drawSolitudeAtmosphere);
 }
 function startSolitudeAtmosphere(){cancelAnimationFrame(solitudeRAF);solitudeRAF=requestAnimationFrame(drawSolitudeAtmosphere)}
 function stopSolitudeAtmosphere(){cancelAnimationFrame(solitudeRAF);solitudeRAF=0;solitudeCtx.clearRect(0,0,solitudeCanvas.width,solitudeCanvas.height)}
-solitudeCanvas.addEventListener("pointermove",e=>{const r=solitudeCanvas.getBoundingClientRect();solitudePointer.tx=(e.clientX-r.left)/r.width;solitudePointer.ty=(e.clientY-r.top)/r.height;},{passive:true});
+solitudeCanvas.addEventListener("pointermove",e=>{if(e.pointerType==="touch")return;const r=solitudeCanvas.getBoundingClientRect();solitudePointer.tx=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));solitudePointer.ty=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));},{passive:true});
 
 let emptyGL=null,emptyProgram=null,emptyFrame=0,emptyRAF=0,emptyPointer={x:.5,y:.5,tx:.5,ty:.5},emptyAudio=null,emptyMusicOn=false;
 const emptyVertex="attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
@@ -440,7 +493,7 @@ sadness:[
 
 let current=null,index=0,startY=0,startTarget=null,lastTap=0,shown=[],itemStartedAt=0,lastCategory=null;const videoDecks={},lastVideoBySpace={};let videoLoadTimer=null,videoLoadToken=0,failedVideoAttempts={};
 const home=document.querySelector("#home"),feed=document.querySelector("#feed"),scene=document.querySelector("#scene"),video=document.querySelector("#scene-video"),msg=document.querySelector("#message"),sub=document.querySelector("#submessage"),depthPanel=document.querySelector("#depth-panel"),depthCopy=document.querySelector("#depth-copy"),depthYes=document.querySelector("#depth-yes"),depthClose=document.querySelector("#depth-close");
-feed.addEventListener("pointermove",e=>{if(!feed.classList.contains("jung-space"))return;const r=solitudeWebGL.getBoundingClientRect();solitudeThreePointer.tx=(e.clientX-r.left)/Math.max(1,r.width)-.5;solitudeThreePointer.ty=(e.clientY-r.top)/Math.max(1,r.height)-.5;},{passive:true});
+feed.addEventListener("pointermove",e=>{if(!feed.classList.contains("jung-space")||e.pointerType==="touch")return;const r=feed.getBoundingClientRect(),x=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));solitudePointer.tx=x;solitudePointer.ty=y;solitudeThreePointer.tx=x-.5;solitudeThreePointer.ty=y-.5;},{passive:true});
 const ADAPT_KEY="tishe_content_rhythm_v1";
 function readAdaptation(){try{return JSON.parse(localStorage.getItem(ADAPT_KEY)||"{}")}catch(e){return {}}}
 function writeAdaptation(value){try{localStorage.setItem(ADAPT_KEY,JSON.stringify(value))}catch(e){}}
