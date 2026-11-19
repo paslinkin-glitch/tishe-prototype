@@ -298,10 +298,13 @@ video.addEventListener("loadeddata",()=>{if(videoLoadTimer){clearTimeout(videoLo
 function enableVideoAudio(){video.muted=false;video.volume=1;if(video.paused){const p=video.play();if(p&&typeof p.catch==="function")p.catch(()=>{});}}
 
 feed.addEventListener("pointerdown",()=>{video.muted=false;video.volume=current&&current.key==="loneliness"?.14:1;const p=video.play();if(p&&typeof p.catch==="function")p.catch(()=>{});},{passive:true});
-depthClose.addEventListener("click",()=>{depthPanel.classList.remove("visible");});\ndocument.querySelector("#journey-question").addEventListener("click",()=>depthPanel.classList.toggle("visible"));\ndocument.querySelector("#journey-next").addEventListener("click",()=>next());
+depthClose.addEventListener("click",()=>{depthPanel.classList.remove("visible");});
+document.querySelector("#journey-question").addEventListener("click",()=>depthPanel.classList.toggle("visible"));
+document.querySelector("#journey-next").addEventListener("click",()=>next());
 depthYes.addEventListener("click",()=>{if(current&&current.key==="loneliness"){depthCopy.textContent="Можно оставить этот вопрос без ответа. Тебе не нужно ничего доказывать или решать прямо сейчас.";depthYes.hidden=true;return;}if(current){const all=readAdaptation(),scores=all[current.key]||{presence:0,support:0,reflection:0},kind=current.items[index][2];scores[kind]=Math.min(2.5,(scores[kind]||0)+.25);all[current.key]=scores;writeAdaptation(all);}depthCopy.textContent="Спасибо, что прислушался к себе. Можно ничего не менять и не делать.";depthYes.hidden=true;});
 
-document.querySelectorAll("[data-space]").forEach(b=>b.addEventListener("click",()=>openSpace(b.dataset.space)));\ndocument.querySelectorAll("[data-journey]").forEach(b=>b.addEventListener("click",()=>openSpace(b.dataset.journey)));
+document.querySelectorAll("[data-space]").forEach(b=>b.addEventListener("click",()=>openSpace(b.dataset.space)));
+document.querySelectorAll("[data-journey]").forEach(b=>b.addEventListener("click",()=>openSpace(b.dataset.journey)));
 document.querySelector("#back").addEventListener("click",goHome);
 feed.addEventListener("touchstart",e=>startY=e.changedTouches[0].clientY,{passive:true});
 feed.addEventListener("touchend",e=>{let dy=startY-e.changedTouches[0].clientY;if(dy>50)next()},{passive:true});
