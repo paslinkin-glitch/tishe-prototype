@@ -182,6 +182,8 @@
 #feed.jung-space .scene-video.is-loading{opacity:0!important}
 #feed.jung-space .world-architecture{z-index:2!important;background:transparent!important}
 #feed.jung-space .world-painting{display:none!important}
+/* The Three.js room frames belong only to the threshold; later chapters use their own symbols. */
+#feed.jung-space .world-symbol{display:block!important}
 #feed.jung-space .world-atmosphere{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;opacity:.9}
 #feed.jung-space .world-architecture:after{z-index:3;background:linear-gradient(90deg,#08091024,transparent 20%,transparent 80%,#08091035),linear-gradient(180deg,#08091045 0%,transparent 23%,transparent 52%,#080910c9 100%);mix-blend-mode:normal}
 #feed.jung-space .scene:before{z-index:2;background:radial-gradient(ellipse at 50% 42%,transparent 15%,#08091038 100%);pointer-events:none}
@@ -266,7 +268,7 @@ function animateSolitudeThree(){
  if(!solitudeThree)initSolitudeThree();
  if(!solitudeThree){if(!solitudeThreeFailed)solitudeThreeRAF=requestAnimationFrame(animateSolitudeThree);return;}
  const w=solitudeThree,now=performance.now(),t=now*.00022;solitudeThreePointer.x+=(solitudeThreePointer.tx-solitudeThreePointer.x)*.025;solitudeThreePointer.y+=(solitudeThreePointer.ty-solitudeThreePointer.y)*.025;
- const phase=feed.dataset.phase||"arrival",dark=phase==="shadow"||phase==="withdrawal";
+ const phase=feed.dataset.phase||"arrival",dark=phase==="shadow"||phase==="withdrawal";w.architecture.visible=phase==="arrival";
  w.camera.position.x=solitudeThreePointer.x*.22+Math.sin(t)*.045;w.camera.position.y=1.6+solitudeThreePointer.y*.1+Math.sin(t*.7)*.025;w.camera.lookAt(solitudeThreePointer.x*.12,1.55,-5.5);
  w.architecture.rotation.y=solitudeThreePointer.x*.012;w.glow.material.opacity=dark?.28:.48+Math.sin(t*2)*.08;w.glowLight.intensity=dark?3.5:7;
  const p=w.positions;for(let i=0;i<w.speeds.length;i++){p[i*3+1]+=.0008*w.speeds[i];p[i*3+2]+=.0015*w.speeds[i];if(p[i*3+1]>5)p[i*3+1]=0;if(p[i*3+2]>2)p[i*3+2]=-18;}w.particles.geometry.attributes.position.needsUpdate=true;
