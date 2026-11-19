@@ -671,14 +671,14 @@ function initSolitudeThree(){
   const shellA=new T.Mesh(new T.SphereGeometry(1.18,64,48,0,Math.PI*.88,.08,Math.PI-.16),shellMat.clone());
   const shellB=new T.Mesh(new T.SphereGeometry(1.18,64,48,Math.PI*1.12,Math.PI*.88,.08,Math.PI-.16),shellMat.clone());
   shellA.scale.set(.88,1.12,.62);shellB.scale.set(.88,1.12,.62);shellA.rotation.z=-.12;shellB.rotation.z=.12;
-  solitudeSculpture.add(shellA,shellB);
+  solitudeSculpture.add(shellA,shellB);shellA.visible=false;shellB.visible=false;
   const voidCore=new T.Mesh(new T.SphereGeometry(.48,48,32),new T.MeshPhysicalMaterial({color:0x080911,metalness:.28,roughness:.18,clearcoat:1,transparent:true,opacity:.94}));
-  voidCore.scale.set(.8,1.18,.55);solitudeSculpture.add(voidCore);
+  voidCore.scale.set(.8,1.18,.55);solitudeSculpture.add(voidCore);voidCore.visible=false;
   const orbit=new T.Mesh(new T.TorusGeometry(1.48,.008,8,180),new T.MeshBasicMaterial({color:0xd8bfd4,transparent:true,opacity:.46}));
   orbit.visible=false; // The circular orbit belongs only to the meeting phase motif.
   orbit.rotation.set(.78,.18,-.22);orbit.scale.set(1,.78,1);solitudeSculpture.add(orbit);
   const filament=new T.Mesh(new T.CylinderGeometry(.009,.009,2.9,8),new T.MeshBasicMaterial({color:0xe5d2e0,transparent:true,opacity:.32}));
-  filament.position.set(.02,0,0);filament.rotation.z=.16;solitudeSculpture.add(filament);
+  filament.position.set(.02,0,0);filament.rotation.z=.16;solitudeSculpture.add(filament);filament.visible=false;
   const relicLight=new T.PointLight(0xd9b8d0,3.2,5,2);relicLight.position.set(-1.1,.8,1.2);solitudeSculpture.add(relicLight);
   // Eight distinct archetypal forms; no single decorative ring is shared by every phase.
   const phaseForms={};
