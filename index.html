@@ -202,6 +202,8 @@
 /* Three.js layer: a quiet navigable depth behind the film footage */
 #feed.jung-space .world-architecture{perspective:none}
 #feed.jung-space .world-webgl{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2;pointer-events:none;opacity:.76;mix-blend-mode:screen}
+/* Keep each chapter symbol above the WebGL canvas and atmospheric veil. */
+#feed.jung-space .world-symbol{display:block!important;z-index:5!important}
 #feed.jung-space .world-atmosphere{z-index:3;opacity:.55}
 #feed.jung-space .world-architecture:after{z-index:4}
 #feed.jung-space .scene:before{z-index:3}
