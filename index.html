@@ -603,6 +603,18 @@ button{font-family:inherit}
  .space,#feed .depth-action,#feed .back{transition:none!important}
 }
 
+
+/* Solitude preview: let the real-time Three.js sculpture replace the placeholder glyph. */
+#feed.jung-space.solitude-preview .world-webgl{display:block!important;visibility:visible!important;opacity:1!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;z-index:8!important;pointer-events:none!important}
+#feed.jung-space.solitude-preview .world-symbol{display:none!important;visibility:hidden!important;opacity:0!important}
+#feed.jung-space.solitude-preview .world-atmosphere{display:block!important;visibility:visible!important;opacity:.62!important;z-index:7!important}
+#feed.jung-space.solitude-preview .world-architecture{z-index:7!important}
+#feed.jung-space.solitude-preview .world-painting{display:none!important}
+#feed.jung-space.solitude-preview .scene:before{opacity:.72!important}
+#feed.jung-space.solitude-preview .scene:after{opacity:.42!important}
+#feed.jung-space.solitude-preview .solitude-enter{min-width:0!important;min-height:42px!important;padding:10px 18px!important;border:1px solid rgba(235,224,239,.34)!important;border-radius:999px!important;background:rgba(9,10,16,.12)!important;box-shadow:none!important;color:rgba(247,241,248,.9)!important;backdrop-filter:blur(8px)!important;letter-spacing:.17em!important;font-size:9px!important}
+@media(max-width:600px) and (orientation:portrait){#feed.jung-space.solitude-preview .solitude-enter{min-height:40px!important}}
+
 </style></head>
 <body>
 <main id="home" class="screen active"><div class="home-inner"><div class="eyebrow">место, где можно быть</div><h1 class="brand">ПРОСТРАНСТВО</h1><p class="intro">Выбери пространство, которое сейчас ближе.</p><div class="spaces">
@@ -653,6 +665,20 @@ function initSolitudeThree(){
   const glowLight=new T.PointLight(0xa9a0bd,7,7,2);glowLight.position.copy(glow.position);scene.add(glowLight);
   // Cinematic dream architecture: real forms with scale, silhouette and parallax.
   const dreamWorld=new T.Group();scene.add(dreamWorld);
+  // A suspended split relic: the loneliness preview's focal 3D symbol.
+  const solitudeSculpture=new T.Group();solitudeSculpture.position.set(0,1.72,-4.9);scene.add(solitudeSculpture);
+  const shellMat=new T.MeshPhysicalMaterial({color:0x9d829d,metalness:.34,roughness:.24,transparent:true,opacity:.62,clearcoat:1,clearcoatRoughness:.16,side:T.DoubleSide});
+  const shellA=new T.Mesh(new T.SphereGeometry(1.18,64,48,0,Math.PI*.88,.08,Math.PI-.16),shellMat.clone());
+  const shellB=new T.Mesh(new T.SphereGeometry(1.18,64,48,Math.PI*1.12,Math.PI*.88,.08,Math.PI-.16),shellMat.clone());
+  shellA.scale.set(.88,1.12,.62);shellB.scale.set(.88,1.12,.62);shellA.rotation.z=-.12;shellB.rotation.z=.12;
+  solitudeSculpture.add(shellA,shellB);
+  const voidCore=new T.Mesh(new T.SphereGeometry(.48,48,32),new T.MeshPhysicalMaterial({color:0x080911,metalness:.28,roughness:.18,clearcoat:1,transparent:true,opacity:.94}));
+  voidCore.scale.set(.8,1.18,.55);solitudeSculpture.add(voidCore);
+  const orbit=new T.Mesh(new T.TorusGeometry(1.48,.008,8,180),new T.MeshBasicMaterial({color:0xd8bfd4,transparent:true,opacity:.46}));
+  orbit.rotation.set(.78,.18,-.22);orbit.scale.set(1,.78,1);solitudeSculpture.add(orbit);
+  const filament=new T.Mesh(new T.CylinderGeometry(.009,.009,2.9,8),new T.MeshBasicMaterial({color:0xe5d2e0,transparent:true,opacity:.32}));
+  filament.position.set(.02,0,0);filament.rotation.z=.16;solitudeSculpture.add(filament);
+  const relicLight=new T.PointLight(0xd9b8d0,3.2,5,2);relicLight.position.set(-1.1,.8,1.2);solitudeSculpture.add(relicLight);
   const basalt=new T.MeshStandardMaterial({color:0x34313f,roughness:.88,metalness:.06,transparent:true,opacity:.58});
   const edgeLight=new T.MeshBasicMaterial({color:0xc4b0c5,transparent:true,opacity:.17});
   const monoliths=[];
@@ -688,7 +714,7 @@ function initSolitudeThree(){
   const particles=new T.Points(pg,new T.PointsMaterial({color:0xc7c0d2,size:.018,transparent:true,opacity:.38,depthWrite:false,sizeAttenuation:true}));scene.add(particles);
   const resize=()=>{const w=Math.max(1,solitudeWebGL.clientWidth),h=Math.max(1,solitudeWebGL.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};
   let observer=null;if("ResizeObserver" in window){observer=new ResizeObserver(resize);observer.observe(solitudeWebGL);}else{window.addEventListener("resize",resize,{passive:true});}
-  solitudeThree={T,renderer,scene,camera,architecture,lightRibbons,ribbonMaterials,glow,glowLight,particles,positions,speeds,resize,observer,dreamWorld,monoliths,threshold,veils,water};
+  solitudeThree={T,renderer,scene,camera,architecture,lightRibbons,ribbonMaterials,glow,glowLight,particles,positions,speeds,resize,observer,dreamWorld,monoliths,threshold,veils,water,solitudeSculpture};
   solitudeWebGL.addEventListener("webglcontextlost",e=>{e.preventDefault();solitudeThreeFailed=true;stopSolitudeThree();solitudeWebGL.style.display="none";},{once:true});
  }catch(e){solitudeThreeFailed=true;solitudeWebGL.style.display="none";console.warn("Three.js scene unavailable; cinematic video remains active.",e);}
 }
@@ -710,6 +736,11 @@ function animateSolitudeThree(){
   meeting:{cameraX:0,cameraY:1.62,cameraZ:8.2,lookY:1.72,lookZ:-7.8,light:5,veil:.12,threshold:.40,scale:1.08},
   return:{cameraX:0,cameraY:1.72,cameraZ:7.3,lookY:1.8,lookZ:-8.2,light:6,veil:.16,threshold:.46,scale:1.14}
  }[phase]||{cameraX:0,cameraY:1.58,cameraZ:8.8,lookY:1.65,lookZ:-7.2,light:4.5,veil:.10,threshold:.32,scale:1};
+ w.solitudeSculpture.rotation.y=Math.sin(t*.72)*.12+solitudeThreePointer.x*.13;
+ w.solitudeSculpture.rotation.x=Math.sin(t*.48)*.045+solitudeThreePointer.y*.06;
+ w.solitudeSculpture.position.y=1.72+Math.sin(t*1.15)*.075;
+ w.solitudeSculpture.scale.setScalar(.94+Math.sin(t*.8)*.025);
+ w.solitudeSculpture.children.forEach((obj,i)=>{if(obj.material&&obj.material.opacity!==undefined&&i<2)obj.material.opacity=(dark?.38:.62)+Math.sin(t+i)*.035;});
  w.architecture.visible=true;
  w.architecture.children.forEach((obj,i)=>{if(obj.material&&obj.material.color){obj.material.color.setHex(tone);obj.material.opacity=(dark?.13:.22)*(1-(i%5)*.035);}});
  w.ribbonMaterials.forEach((m,i)=>{m.color.setHex(tone);m.opacity=mood.veil*(.78+Math.sin(t+i)*.16);});
