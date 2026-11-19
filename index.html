@@ -675,10 +675,45 @@ function initSolitudeThree(){
   const voidCore=new T.Mesh(new T.SphereGeometry(.48,48,32),new T.MeshPhysicalMaterial({color:0x080911,metalness:.28,roughness:.18,clearcoat:1,transparent:true,opacity:.94}));
   voidCore.scale.set(.8,1.18,.55);solitudeSculpture.add(voidCore);
   const orbit=new T.Mesh(new T.TorusGeometry(1.48,.008,8,180),new T.MeshBasicMaterial({color:0xd8bfd4,transparent:true,opacity:.46}));
+  orbit.visible=false; // The circular orbit belongs only to the meeting phase motif.
   orbit.rotation.set(.78,.18,-.22);orbit.scale.set(1,.78,1);solitudeSculpture.add(orbit);
   const filament=new T.Mesh(new T.CylinderGeometry(.009,.009,2.9,8),new T.MeshBasicMaterial({color:0xe5d2e0,transparent:true,opacity:.32}));
   filament.position.set(.02,0,0);filament.rotation.z=.16;solitudeSculpture.add(filament);
   const relicLight=new T.PointLight(0xd9b8d0,3.2,5,2);relicLight.position.set(-1.1,.8,1.2);solitudeSculpture.add(relicLight);
+  // Eight distinct archetypal forms; no single decorative ring is shared by every phase.
+  const phaseForms={};
+  const makePhaseForm=(name)=>{const g=new T.Group();g.name="phase-"+name;solitudeSculpture.add(g);phaseForms[name]=g;return g;};
+  const pearl=new T.MeshPhysicalMaterial({color:0xcbb5c9,metalness:.18,roughness:.22,transparent:true,opacity:.66,clearcoat:1});
+  const ink=new T.MeshStandardMaterial({color:0x11101b,roughness:.32,metalness:.18});
+  const pale=new T.MeshBasicMaterial({color:0xd9c3d8,transparent:true,opacity:.5});
+  // arrival: incomplete shell
+  makePhaseForm("arrival").add(new T.Mesh(new T.SphereGeometry(1.12,48,32,0,Math.PI*1.55,0,Math.PI),pearl));
+  // mask: a smooth face-like plane with two shadow apertures
+  const maskForm=makePhaseForm("mask");
+  const maskPlate=new T.Mesh(new T.SphereGeometry(1,48,32,0,Math.PI*2,0,Math.PI),pearl);maskPlate.scale.set(.76,1.12,.24);maskForm.add(maskPlate);
+  [-.29,.29].forEach(x=>{const eye=new T.Mesh(new T.SphereGeometry(.105,20,16),ink);eye.position.set(x,.18,.22);eye.scale.set(1,.55,.45);maskForm.add(eye);});
+  // longing: a narrow, suspended ellipse pulled toward an absent point
+  const longingForm=makePhaseForm("longing");
+  const longingArc=new T.Mesh(new T.TorusGeometry(.82,.025,8,120,Math.PI*1.55),pale);longingArc.scale.set(.72,1.35,1);longingArc.rotation.z=-.52;longingForm.add(longingArc);
+  const longingPoint=new T.Mesh(new T.SphereGeometry(.13,24,16),pearl);longingPoint.position.set(.9,-.82,0);longingForm.add(longingPoint);
+  // withdrawal: a distant, shrinking stone
+  const withdrawalForm=makePhaseForm("withdrawal");
+  const retreat=new T.Mesh(new T.IcosahedronGeometry(.78,2),new T.MeshPhysicalMaterial({color:0x8794aa,roughness:.52,metalness:.2,transparent:true,opacity:.55}));retreat.scale.set(.62,.9,.5);withdrawalForm.add(retreat);
+  // shadow: an almost closed dark chamber
+  const shadowForm=makePhaseForm("shadow");
+  const chamber=new T.Mesh(new T.BoxGeometry(1.42,1.65,.12),ink);chamber.material=ink.clone();chamber.material.side=T.DoubleSide;chamber.rotation.y=.22;shadowForm.add(chamber);
+  const shadowAperture=new T.Mesh(new T.CircleGeometry(.28,48),new T.MeshBasicMaterial({color:0x05050b}));shadowAperture.position.z=.08;shadowForm.add(shadowAperture);
+  // vulnerable: a fragile translucent sphere with a fine fracture
+  const vulnerableForm=makePhaseForm("vulnerable");
+  const fragile=new T.Mesh(new T.SphereGeometry(.9,48,32),new T.MeshPhysicalMaterial({color:0xe1c5d0,roughness:.12,metalness:.08,transparent:true,opacity:.26,clearcoat:1,side:T.DoubleSide}));fragile.scale.set(.88,1.08,.7);vulnerableForm.add(fragile);
+  const fracture=new T.Mesh(new T.TorusGeometry(.9,.009,6,100),pale);fracture.scale.set(.55,1.12,1);fracture.rotation.set(.4,.5,.2);vulnerableForm.add(fracture);
+  // meeting: two forms held in a quiet orbit
+  const meetingForm=makePhaseForm("meeting");
+  [-.48,.48].forEach((x,i)=>{const orb=new T.Mesh(new T.SphereGeometry(.46,40,28),pearl.clone());orb.position.set(x,0,0);orb.material.color.setHex(i?0xb9c3d4:0xd8b9ca);meetingForm.add(orb);});
+  const meetingOrbit=new T.Mesh(new T.TorusGeometry(1.05,.009,8,120),pale);meetingOrbit.rotation.x=.8;meetingForm.add(meetingOrbit);
+  // return: a spiral opening outward
+  const returnForm=makePhaseForm("return");
+  const returnSpiral=new T.Mesh(new T.TorusKnotGeometry(.62,.018,180,8,2,5),new T.MeshBasicMaterial({color:0xe0c8d2,transparent:true,opacity:.62}));returnSpiral.scale.set(1,1.18,.55);returnForm.add(returnSpiral);
   const basalt=new T.MeshStandardMaterial({color:0x34313f,roughness:.88,metalness:.06,transparent:true,opacity:.58});
   const edgeLight=new T.MeshBasicMaterial({color:0xc4b0c5,transparent:true,opacity:.17});
   const monoliths=[];
@@ -736,6 +771,10 @@ function animateSolitudeThree(){
   meeting:{cameraX:0,cameraY:1.62,cameraZ:8.2,lookY:1.72,lookZ:-7.8,light:5,veil:.12,threshold:.40,scale:1.08},
   return:{cameraX:0,cameraY:1.72,cameraZ:7.3,lookY:1.8,lookZ:-8.2,light:6,veil:.16,threshold:.46,scale:1.14}
  }[phase]||{cameraX:0,cameraY:1.58,cameraZ:8.8,lookY:1.65,lookZ:-7.2,light:4.5,veil:.10,threshold:.32,scale:1};
+ const activeForm=w.phaseForms[phase];
+ Object.values(w.phaseForms).forEach(form=>{form.visible=false;});
+ if(activeForm)activeForm.visible=true;
+ w.solitudeSculpture.visible=true;
  w.solitudeSculpture.rotation.y=Math.sin(t*.72)*.12+solitudeThreePointer.x*.13;
  w.solitudeSculpture.rotation.x=Math.sin(t*.48)*.045+solitudeThreePointer.y*.06;
  w.solitudeSculpture.position.y=1.72+Math.sin(t*1.15)*.075;
@@ -1021,7 +1060,19 @@ function render(){
   window.setTimeout(()=>{if(!current)return;msg.textContent=item[0];sub.textContent=item[1];requestAnimationFrame(()=>requestAnimationFrame(()=>{msg.classList.remove("is-changing");sub.classList.remove("is-changing")}));},170);
   itemStartedAt=Date.now();lastCategory=item[2];depthCopy.textContent=deeper[current.key][index];if(!shown.includes(index))shown.push(index);
 }
-function next(){if(!current)return;if(current.key==="loneliness")return;if(current.key==="emptiness"){if(index<current.items.length-1){index++;drawVideo(current.key);render()}else{goHome()}return;}learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
+function advanceSolitude(){
+ if(!current||current.key!=="loneliness")return;
+ if(solitudeDepth<3){
+   solitudeDepth++;
+   render();
+   if(solitudeDepth===1)playSolitudeVideo(jungStory[index]);
+   return;
+ }
+ video.pause();video.removeAttribute("src");video.load();video.classList.add("is-loading");
+ if(index<jungStory.length-1){index++;solitudeDepth=0;render();}
+ else goHome();
+}
+function next(){if(!current)return;if(current.key==="loneliness"){advanceSolitude();return;}if(current.key==="emptiness"){if(index<current.items.length-1){index++;drawVideo(current.key);render()}else{goHome()}return;}learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
 function skipUnavailableVideo(key,token){
   if(token!==videoLoadToken||!current||current.key!==key)return;
   if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}
@@ -1090,12 +1141,7 @@ solitudeEnter.addEventListener("click",()=>{
   solitudeDepth=1;render();playSolitudeVideo(jungStory[index]);
 });
 document.querySelector("#journey-question").addEventListener("click",()=>{
-  if(current&&current.key==="loneliness"){
-    if(solitudeDepth<3){solitudeDepth++;render();return;}
-    video.pause();video.removeAttribute("src");video.load();video.classList.add("is-loading");
-    if(index<jungStory.length-1){index++;solitudeDepth=0;render();}else goHome();
-    return;
-  }
+  if(current&&current.key==="loneliness"){advanceSolitude();return;}
   depthPanel.classList.toggle("visible");
 });
 depthYes.addEventListener("click",()=>{if(current&&current.key==="loneliness"){depthCopy.textContent="Можно оставить этот вопрос без ответа. Тебе не нужно ничего доказывать или решать прямо сейчас.";depthYes.hidden=true;return;}if(current){const all=readAdaptation(),scores=all[current.key]||{presence:0,support:0,reflection:0},kind=current.items[index][2];scores[kind]=Math.min(2.5,(scores[kind]||0)+.25);all[current.key]=scores;writeAdaptation(all);}depthCopy.textContent="Спасибо, что прислушался к себе. Можно ничего не менять и не делать.";depthYes.hidden=true;});
