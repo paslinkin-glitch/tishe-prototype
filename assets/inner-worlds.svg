@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+<defs>
+ <linearGradient id="night" x2="0" y2="1"><stop stop-color="#151b27"/><stop offset=".58" stop-color="#20202d"/><stop offset="1" stop-color="#080b12"/></linearGradient>
+ <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#b9c8d8" stop-opacity=".10"/><stop offset=".5" stop-color="#a9a0b9" stop-opacity=".025"/><stop offset="1" stop-color="#d3b8c9" stop-opacity=".12"/></linearGradient>
+ <radialGradient id="cold"><stop stop-color="#c3cbdc" stop-opacity=".25"/><stop offset="1" stop-color="#9aa8c5" stop-opacity="0"/></radialGradient>
+ <radialGradient id="plum"><stop stop-color="#b18b9e" stop-opacity=".22"/><stop offset="1" stop-color="#8b7189" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="35"/></filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .6 0 0 0 0 .6 0 0 0 0 .7 0 0 0 .12 0"/></filter>
+</defs>
+<symbol id="anxiety-1" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/>
+ <ellipse cx="800" cy="420" rx="570" ry="380" fill="url(#cold)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080c14" opacity=".2"/>
+ <path d="M0 0L510 210V900H0ZM1600 0L1090 210V900H1600Z" fill="#080b12" opacity=".72"/>
+ <path d="M510 210L800 120L1090 210V900H510Z" fill="url(#glass)" stroke="#c5cbd9" stroke-opacity=".2" stroke-width="2"/>
+ <path d="M510 210L800 120L1090 210M510 900L800 470L1090 900" fill="none" stroke="#c7cad9" stroke-opacity=".24" stroke-width="2"/>
+ <path d="M800 120V900M510 210L1090 900M1090 210L510 900" stroke="#c4c8d8" stroke-opacity=".08" stroke-width="2"/>
+ <g fill="none" stroke="#c5c9d8" stroke-opacity=".22"><path d="M0 315Q390 265 800 315T1600 300"/><path d="M0 365Q390 315 800 365T1600 350"/><path d="M0 415Q390 365 800 415T1600 400"/></g>
+ <path d="M800 0L760 180L820 290L775 420L825 550L780 690L800 900" fill="none" stroke="#d6c9d7" stroke-opacity=".2" stroke-width="2"/>
+ <circle cx="800" cy="470" r="6" fill="#d9d5e1" opacity=".55"/><circle cx="800" cy="470" r="80" fill="url(#cold)"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".22"/>
+</symbol>
+<symbol id="anxiety-2" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/>
+ <ellipse cx="800" cy="450" rx="600" ry="400" fill="url(#cold)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080b13" opacity=".28"/>
+ <path d="M0 0L380 0L660 900H0ZM1600 0H1220L940 900H1600Z" fill="#080b13" opacity=".72"/>
+ <path d="M380 0L660 900M1220 0L940 900" stroke="#c4c9d8" stroke-opacity=".18" stroke-width="3"/>
+ <g fill="none" stroke="#d2c6d8" stroke-opacity=".28" stroke-width="2">
+ <path d="M0 220L1600 670M0 310L1600 580M0 400L1600 490M0 490L1600 400M0 580L1600 310"/>
+ <path d="M150 0L920 900M390 0L1100 900M650 0L1320 900M920 0L1510 900"/>
+ </g>
+ <ellipse cx="800" cy="490" rx="240" ry="190" fill="url(#plum)" />
+ <path d="M620 720Q800 600 980 720" stroke="#d7c7d8" stroke-opacity=".35" fill="none" stroke-width="2"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="anxiety-3" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/>
+ <ellipse cx="800" cy="450" rx="580" ry="420" fill="url(#cold)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#070a12" opacity=".35"/>
+ <path d="M0 120Q300 20 560 180T1100 150T1600 90V0H0Z" fill="#c0c6d4" opacity=".07"/>
+ <g fill="none" stroke="#d0c8d9" stroke-opacity=".25" stroke-width="2">
+ <path d="M0 270Q220 180 430 280T850 260T1250 250T1600 210"/>
+ <path d="M0 340Q250 250 470 350T900 330T1300 320T1600 280"/>
+ <path d="M0 410Q260 320 500 420T950 400T1350 390T1600 350"/>
+ <path d="M0 480Q300 390 540 490T1000 470T1400 460T1600 420"/>
+ </g>
+ <path d="M800 0V900" stroke="#d7cbdc" stroke-opacity=".2" stroke-width="2"/>
+ <ellipse cx="800" cy="500" rx="280" ry="210" fill="url(#cold)"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="anxiety-4" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="url(#night)"/>
+ <ellipse cx="800" cy="430" rx="640" ry="420" fill="url(#cold)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080b12" opacity=".2"/>
+ <path d="M0 620Q260 560 500 640T1000 620T1600 600V900H0Z" fill="#b2bdcc" opacity=".06"/>
+ <g fill="none" stroke="#cbd0dc" stroke-opacity=".2">
+ <path d="M0 700Q400 660 800 700T1600 680" stroke-width="2"/>
+ <path d="M0 745Q400 705 800 745T1600 725"/>
+ <path d="M0 790Q400 750 800 790T1600 770"/>
+ </g>
+ <path d="M0 0H1600" stroke="#d8d0dc" stroke-opacity=".1" stroke-width="2"/>
+ <ellipse cx="800" cy="350" rx="400" ry="200" fill="url(#plum)"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".18"/>
+</symbol>
+<symbol id="emptiness-1" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#0a0e16"/>
+ <ellipse cx="800" cy="440" rx="620" ry="400" fill="url(#cold)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080b13" opacity=".25"/>
+ <path d="M0 900L550 500H1050L1600 900" fill="#b6c0d0" opacity=".035"/>
+ <path d="M0 900L650 470M1600 900L950 470" stroke="#c5cbd8" stroke-opacity=".17" stroke-width="2"/>
+ <rect x="620" y="190" width="360" height="480" fill="url(#glass)" stroke="#c5cbd8" stroke-opacity=".12"/>
+ <path d="M800 190V670M620 430H980" stroke="#c5cbd8" stroke-opacity=".1"/>
+ <circle cx="800" cy="430" r="125" fill="none" stroke="#c5cbd8" stroke-opacity=".16" stroke-width="2"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="emptiness-2" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#0a0e16"/>
+ <ellipse cx="800" cy="440" rx="620" ry="400" fill="url(#cold)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080b13" opacity=".22"/>
+ <g fill="none" stroke="#c5cbd8" stroke-opacity=".17" stroke-width="2">
+ <path d="M200 0V900M1400 0V900M0 230H1600M0 690H1600"/>
+ <path d="M200 230L1400 690M1400 230L200 690"/>
+ </g>
+ <g fill="#bbc4d3" opacity=".09"><circle cx="410" cy="300" r="100"/><circle cx="1180" cy="620" r="150"/><circle cx="800" cy="450" r="240"/></g>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="emptiness-3" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#0a0e16"/>
+ <ellipse cx="800" cy="440" rx="620" ry="400" fill="url(#cold)" filter="url(#blur)"/>
+ <g fill="none" stroke="#c5cbd8" stroke-opacity=".15" stroke-width="2"><circle cx="800" cy="450" r="180"/><circle cx="800" cy="450" r="300"/><circle cx="800" cy="450" r="430"/></g>
+ <path d="M0 450H1600M800 0V900" stroke="#c5cbd8" stroke-opacity=".08"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="emptiness-4" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#0a0e16"/>
+ <ellipse cx="800" cy="420" rx="620" ry="400" fill="url(#plum)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080b13" opacity=".15"/>
+ <path d="M0 690Q400 640 800 690T1600 670" stroke="#c5cbd8" stroke-opacity=".17" fill="none" stroke-width="2"/>
+ <circle cx="800" cy="430" r="3" fill="#d8cbd9" opacity=".5"/><circle cx="800" cy="430" r="100" fill="url(#plum)"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="sadness-1" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#100d16"/>
+ <ellipse cx="800" cy="440" rx="620" ry="400" fill="url(#plum)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080b13" opacity=".24"/>
+ <path d="M0 570Q300 500 600 580T1200 560T1600 570V900H0Z" fill="#c09aa8" opacity=".07"/>
+ <path d="M0 570Q300 500 600 580T1200 560T1600 570" stroke="#d7c3d1" stroke-opacity=".25" fill="none" stroke-width="2"/>
+ <path d="M800 0V900" stroke="#d6c0cf" stroke-opacity=".1"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="sadness-2" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#100d16"/>
+ <ellipse cx="800" cy="460" rx="650" ry="400" fill="url(#plum)" filter="url(#blur)"/>
+ <g fill="none" stroke="#d2bacb" stroke-opacity=".18" stroke-width="2"><path d="M0 260Q400 220 800 260T1600 250"/><path d="M0 350Q400 310 800 350T1600 340"/><path d="M0 440Q400 400 800 440T1600 430"/></g>
+ <path d="M0 680Q300 600 600 680T1200 660T1600 670V900H0Z" fill="#c49eae" opacity=".06"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="sadness-3" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#100d16"/>
+ <ellipse cx="800" cy="460" rx="600" ry="390" fill="url(#plum)" filter="url(#blur)"/>
+ <g fill="none" stroke="#d7c2d0" stroke-opacity=".19"><circle cx="800" cy="610" r="90"/><circle cx="800" cy="610" r="180"/><circle cx="800" cy="610" r="280"/></g>
+ <path d="M0 590Q400 540 800 590T1600 570" stroke="#d7c2d0" stroke-opacity=".2" fill="none" stroke-width="2"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+<symbol id="sadness-4" viewBox="0 0 1600 900">
+ <rect width="1600" height="900" fill="#100d16"/>
+ <ellipse cx="800" cy="440" rx="620" ry="400" fill="url(#plum)" filter="url(#blur)"/>
+ <path d="M0 0H1600V900H0Z" fill="#080b13" opacity=".16"/>
+ <path d="M0 690Q400 620 800 690T1600 680" stroke="#d7c2d0" stroke-opacity=".2" fill="none" stroke-width="2"/>
+ <circle cx="800" cy="470" r="5" fill="#e0cad6" opacity=".48"/><circle cx="800" cy="470" r="140" fill="url(#plum)"/>
+ <rect width="1600" height="900" filter="url(#grain)" opacity=".2"/>
+</symbol>
+</svg>
