@@ -68,3 +68,27 @@
 - `assets/solitude/08-return.webp` и `08-return.mp4`
 
 Перед подключением проверять разрешение, длительность, кодек, размер, центральную безопасную область, читаемость текста поверх кадра и корректность цикла на мобильном экране. Для видео использовать H.264/MP4 без аудио, умеренный битрейт и постер-изображение. Не переключать интерфейс на несуществующие пути до фактического появления файлов.
+
+
+## Найденные открытые медиафайлы (Pexels)
+
+Подбор сделан по публичным страницам Pexels, на которых указана бесплатная лицензия / Free to use. Это внешние исходники, а не файлы, уже скопированные в репозиторий. Перед публикацией проверить кадрирование, цветокоррекцию, мобильный кроп и актуальные условия [Pexels License](https://www.pexels.com/license/). Pexels обычно не требует атрибуции, но авторство сохранено в реестре для прозрачности.
+
+| Сцена | Фото | Видео |
+|---|---|---|
+| 1. Порог | [An Empty Hallway — Amine Mayoufi](https://www.pexels.com/photo/an-empty-hallway-5933191/) | [The door to the dark room is open — Anh Nguyen](https://www.pexels.com/video/the-door-to-the-dark-room-is-open-26791723/) |
+| 2. Лицо для других | [Woman Face Reflection in Mirror — Atahan Demir](https://www.pexels.com/photo/woman-face-reflection-in-mirror-14874383/) | [A Man Looking at Himself in the Mirror — PNW Production](https://www.pexels.com/video/a-man-looking-at-himself-in-the-mirror-7326751/) |
+| 3. То, чего хочется | [Silhouette of Person Gazing Through Window at Misty Landscape — Dương Nhân](https://www.pexels.com/photo/silhouette-of-person-gazing-through-window-at-misty-landscape-32960953/) | [Man Looking Through Window — Vanessa Garcia](https://www.pexels.com/video/man-looking-through-window-10802605/) |
+| 4. Шаг назад | [Dimly Lit Empty Corridor with Closed Door](https://www.pexels.com/photo/dimly-lit-empty-corridor-with-closed-door-39972076/) | [Woman Closing a Door — MART PRODUCTION](https://www.pexels.com/video/woman-closing-a-door-9563520/) |
+| 5. Тёмная комната | [Spots of Light in Corridor Darkness — Sina Rezakhani](https://www.pexels.com/photo/spots-of-light-in-corridor-darkness-25237316/) | Без видео: оставить авторскую SVG-сцену `shadow` основным образом |
+| 6. Тот, кто ждёт | [Lonely Man Sitting on Bed — cottonbro studio](https://www.pexels.com/photo/lonely-man-sitting-on-bed-8860203/) | [A Man Seated on the Corner of His Bed in a Darkroom — MART PRODUCTION](https://www.pexels.com/video/a-man-seated-on-the-corner-of-his-bed-in-a-darkroom-3712707/) |
+| 7. Возможность встречи | [Back View of People Silhouette at Dusk — David Kanigan](https://www.pexels.com/photo/back-view-of-people-silhouette-at-dusk-19602602/) | [Silhouette of Two People Conversing at Twilight — Burak Bahadır Büyükkılınç](https://www.pexels.com/video/silhouette-of-two-people-conversing-at-twilight-34659649/) |
+| 8. Возвращение | [Arches over Corridor — Candid Flaneur](https://www.pexels.com/photo/arches-over-corridor-15113466/) | [Man Walking in Historical Arched Corridor — Özgür Sürmeli](https://www.pexels.com/video/man-walking-in-historical-arched-corridor-36893300/) |
+
+### Примечания к подбору
+
+- Для сцены 5 выбран только статичный фото-референс; в интерфейсе по-прежнему приоритет у авторской SVG, чтобы не превращать эту сцену в буквальную иллюстрацию или хоррор.
+- Фото для сцен 3 и 7 могут содержать более светлый/закатный оттенок, чем заданная палитра. Использовать их только после приглушения насыщенности и холодной цветокоррекции; если образ не выдерживает стиль, оставить SVG.
+- Некоторые найденные видео вертикальные или с заметным сюжетом. Для широкого интерфейса проверить центральный кроп и не показывать ролик, если важный объект обрезается.
+- Видео для восьми сцен не собирать в общий плейлист: каждому эпизоду соответствует только его собственный источник.
+- Публичная страница Pexels подтверждает бесплатный доступ к исходнику, но это не означает, что медиа уже загружено в GitHub. В текущем коммите добавлен каталог источников; бинарные файлы в `assets/solitude/` пока не копировались.
