@@ -266,6 +266,25 @@
 #feed.jung-space[data-phase="vulnerable"] .scene-video{filter:brightness(.92) saturate(.8) contrast(1.01)!important}
 #feed.jung-space[data-phase="meeting"] .scene-video{filter:brightness(.94) saturate(.88) contrast(1.01)!important}
 #feed.jung-space[data-phase="return"] .scene-video{filter:brightness(.98) saturate(.9) contrast(1.01)!important}
+/* Final solitude composition: film first, subtle WebGL atmosphere, no rigid overlays. */
+#feed.jung-space .world-horizon,#feed.jung-space .world-floor,#feed.jung-space .world-door,#feed.jung-space .world-reflection,#feed.jung-space .world-lights,#feed.jung-space .world-figure,#feed.jung-space .world-symbol,#feed.jung-space .world-painting{display:none!important}
+#feed.jung-space .scene-video{z-index:1!important;opacity:1!important;visibility:visible!important;mix-blend-mode:normal!important;filter:brightness(.96) saturate(.88) contrast(1.01)!important;object-fit:cover;object-position:center}
+#feed.jung-space .scene-video.is-loading{opacity:0!important}
+#feed.jung-space .world-webgl{display:block!important;z-index:2!important;opacity:.30!important;mix-blend-mode:screen!important}
+#feed.jung-space .world-atmosphere{display:block!important;z-index:3!important;opacity:.34!important;mix-blend-mode:screen!important}
+#feed.jung-space .world-architecture:after{z-index:4!important;background:linear-gradient(180deg,#08091010 0%,transparent 36%,#08091035 100%)!important;mix-blend-mode:normal!important}
+#feed.jung-space .scene:before{z-index:3!important;background:radial-gradient(ellipse at 50% 42%,transparent 35%,#08091012 100%)!important}
+#feed.jung-space .scene:after{z-index:4!important;background:linear-gradient(180deg,#08091018 0%,transparent 32%,#08091008 58%,#080910b0 100%)!important}
+#feed.jung-space .content{z-index:6!important}
+#feed.jung-space[data-phase="arrival"] .scene-video{filter:brightness(.94) saturate(.84) contrast(1.01)!important}
+#feed.jung-space[data-phase="mask"] .scene-video{filter:brightness(.91) saturate(.78) contrast(1.03)!important}
+#feed.jung-space[data-phase="longing"] .scene-video{filter:brightness(1) saturate(.94) contrast(1)!important}
+#feed.jung-space[data-phase="withdrawal"] .scene-video{filter:brightness(.86) saturate(.7) contrast(1.04)!important}
+#feed.jung-space[data-phase="shadow"] .scene-video{filter:brightness(.82) saturate(.66) contrast(1.05)!important}
+#feed.jung-space[data-phase="vulnerable"] .scene-video{filter:brightness(.98) saturate(.9) contrast(1)!important}
+#feed.jung-space[data-phase="meeting"] .scene-video{filter:brightness(1) saturate(.94) contrast(1)!important}
+#feed.jung-space[data-phase="return"] .scene-video{filter:brightness(1.02) saturate(.96) contrast(1)!important}
+@media(max-width:600px){#feed.jung-space .world-webgl{opacity:.22!important}#feed.jung-space .world-atmosphere{opacity:.26!important}}
 /* Keep navigation above all visual canvases and pseudo-element overlays. */
 #feed .topbar{z-index:30;pointer-events:none}
 #feed .topbar .back{position:relative;z-index:31;pointer-events:auto;touch-action:manipulation}
@@ -337,7 +356,7 @@ function animateSolitudeThree(){
  const phase=feed.dataset.phase||"arrival";
  const tones={arrival:0xb8a9c3,mask:0x9e879f,longing:0xd1a9ad,withdrawal:0x8191aa,shadow:0x77718f,vulnerable:0xd6b5c0,meeting:0xb7b0c9,return:0xd8c1c5};
  const tone=tones[phase]||tones.arrival,dark=phase==="shadow"||phase==="withdrawal";
- w.architecture.visible=true;
+ w.architecture.visible=false; // Keep soft ribbons and particles, remove rigid room-frame bands.
  w.architecture.children.forEach((obj,i)=>{if(obj.material&&obj.material.color){obj.material.color.setHex(tone);obj.material.opacity=(phase==="shadow"?.075:.105)*(1-(i%5)*.08);}});
  w.ribbonMaterials.forEach((m,i)=>{m.color.setHex(tone);m.opacity=(phase==="shadow"?.035:.085)+Math.sin(t+i)*.012;});
  w.camera.position.x=solitudeThreePointer.x*.22+Math.sin(t)*.045;w.camera.position.y=1.6+solitudeThreePointer.y*.1+Math.sin(t*.7)*.025;w.camera.lookAt(solitudeThreePointer.x*.12,1.55,-5.5);
