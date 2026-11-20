@@ -1068,11 +1068,15 @@ function advanceSolitude(){
    if(solitudeDepth===1)playSolitudeVideo(jungStory[index]);
    return;
  }
+ nextSolitudeScene();
+}
+function nextSolitudeScene(){
+ if(!current||current.key!=="loneliness")return;
  video.pause();video.removeAttribute("src");video.load();video.classList.add("is-loading");
  if(index<jungStory.length-1){index++;solitudeDepth=0;render();}
  else goHome();
 }
-function next(){if(!current)return;if(current.key==="loneliness"){advanceSolitude();return;}if(current.key==="emptiness"){if(index<current.items.length-1){index++;drawVideo(current.key);render()}else{goHome()}return;}learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
+function next(){if(!current)return;if(current.key==="loneliness"){nextSolitudeScene();return;}if(current.key==="emptiness"){if(index<current.items.length-1){index++;drawVideo(current.key);render()}else{goHome()}return;}learnFromVisit();index=chooseNext();drawVideo(current.key);render()}
 function skipUnavailableVideo(key,token){
   if(token!==videoLoadToken||!current||current.key!==key)return;
   if(videoLoadTimer){clearTimeout(videoLoadTimer);videoLoadTimer=null;}
